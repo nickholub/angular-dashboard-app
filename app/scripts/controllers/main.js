@@ -26,7 +26,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     title: 'Widget 4',
     directive: 'scope-watch',
     options: {
-      varName: 'randomValue'
+      propertyName: 'randomValue'
     }
   });
 

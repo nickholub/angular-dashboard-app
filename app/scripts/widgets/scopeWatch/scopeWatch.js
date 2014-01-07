@@ -5,8 +5,8 @@ angular.module('app').directive('scopeWatch', function ($interval) {
     link: function postLink(scope, element, attrs) {
       var options = scope.widget.options;
 
-      if (options && options.varName) {
-        scope.$watch(options.varName, function (value) {
+      if (options && options.propertyName) {
+        scope.$watch(options.propertyName, function (value) {
           scope.scopeValue = value;
         });
       }
