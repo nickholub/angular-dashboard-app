@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('app').controller('MainCtrl', function ($scope) {
+angular.module('app').controller('MainCtrl', function ($scope, $interval) {
+
+
+  $interval(function () {
+    $scope.randomValue = Math.random();
+  }, 500);
+
   var widgets = [];
 
   widgets.push({
@@ -18,6 +24,14 @@ angular.module('app').controller('MainCtrl', function ($scope) {
     directive: 'two'
   });
 
+  widgets.push({
+    title: 'Widget 4',
+    directive: 'scope-watch',
+    options: {
+      varName: 'randomValue'
+    }
+  });
+
   $scope.widgets = widgets;
 
   var count = $scope.widgets.length + 1;
@@ -26,6 +40,16 @@ angular.module('app').controller('MainCtrl', function ($scope) {
     $scope.widgets.push({
       title: 'Widget ' + count++,
       directive: id
+    });
+  };
+
+  $scope.addWidgetScopeWatch = function () {
+    $scope.widgets.push({
+      title: 'Widget ' + count++,
+      directive: 'scope-watch',
+      options: {
+        varName: 'randomValue'
+      }
     });
   };
 
