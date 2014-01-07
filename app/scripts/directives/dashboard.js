@@ -9,9 +9,10 @@ angular.module('ui.dashboard')
     //TODO store active widgets in local storage on add/remove/reorder
     $scope.sortableOptions = {
       stop: function () {
-        console.log(_.map($scope.widgets, function (widget) {
+        var titles = _.map($scope.widgets, function (widget) {
           return widget.title;
-        }));
+        });
+        console.log(titles);
       }
     };
   })
