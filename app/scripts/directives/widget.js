@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').directive('widget', ['$compile', function ($compile) {
+angular.module('ui.dashboard').directive('widget', ['$compile', function ($compile) {
   return {
     require: '^dashboard',
     link: function (scope, element) {

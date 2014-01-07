@@ -5,7 +5,7 @@ angular.module('app', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.sortable'
+  'ui.dashboard'
 ])
   .config(function ($routeProvider) {
     $routeProvider
