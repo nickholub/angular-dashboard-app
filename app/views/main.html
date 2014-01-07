@@ -1,4 +1,4 @@
-<div class="row" ng-controller="DashboardCtrl">
+<div class="row">
     <div class="col-md-4">
         <h2>Controls</h2>
 
@@ -12,14 +12,6 @@
     </div>
     <div class="col-md-8">
         <h2>Widgets</h2>
-        <ul ui-sortable="sortableOptions" ng-model="widgets" class="list">
-            <li ng-repeat="widget in widgets" class="widget" widget>
-                <div class="widget-header">
-                    {{widget.title}}: <span class="label label-primary">{{widget.directive}}</span>
-                    <span ng-click="removeWidget(widget)" class="glyphicon glyphicon-remove"></span>
-                </div>
-                <div class="widget-content"></div>
-            </li>
-        </ul>
+        <dashboard></dashboard>
     </div>
 </div>
