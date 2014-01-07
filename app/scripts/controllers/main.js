@@ -7,7 +7,6 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     $scope.randomValue = Math.random();
   }, 500);
 
-
   var dashboardWidgets = [];
 
   dashboardWidgets.push({
