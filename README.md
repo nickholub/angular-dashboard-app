@@ -11,6 +11,7 @@ Dashboard/Widgets functionality with AngularJS.
 
  - Widgets drag and drop
 
+![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
 ## Running Application
  Install dependencies:
