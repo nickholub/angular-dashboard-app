@@ -1,9 +1,25 @@
-<div class="hero-unit">
-  <h1>'Allo, 'Allo!</h1>
-  <p>You now have</p>
-  <ul>
-      <li ng-repeat="thing in awesomeThings">{{thing}}</li>
-  </ul>
-  <p>installed.</p>
-  <h3>Enjoy coding! - Yeoman</h3>
+<div class="row" ng-controller="DashboardCtrl">
+    <div class="col-md-4">
+        <h2>Controls</h2>
+
+        <p>
+            <button ng-click="addWidget('one');" type="button" class="btn btn-success">Add Widget One</button>
+        <p>
+
+        <p>
+            <button ng-click="addWidget('two');" type="button" class="btn btn-info">Add Widget Two</button>
+        </p>
+    </div>
+    <div class="col-md-8">
+        <h2>Widgets</h2>
+        <ul ui-sortable="sortableOptions" ng-model="widgets" class="list">
+            <li ng-repeat="widget in widgets" class="widget" widget>
+                <div class="widget-header">
+                    {{widget.title}}: <span class="label label-primary">{{widget.kind}}</span>
+                    <span ng-click="removeWidget(widget)" class="glyphicon glyphicon-remove"></span>
+                </div>
+                <div class="widget-content"></div>
+            </li>
+        </ul>
+    </div>
 </div>

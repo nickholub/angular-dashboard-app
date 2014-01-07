@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('angularDashboardApp', [
+angular.module('app', [
+  'ngRoute',
   'ngCookies',
   'ngResource',
-  'ngSanitize'
+  'ngSanitize',
+  'ui.sortable'
 ])
   .config(function ($routeProvider) {
     $routeProvider
