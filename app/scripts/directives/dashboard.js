@@ -1,7 +1,13 @@
 'use strict';
 
 angular.module('app').controller('DashboardController', function ($scope) {
-  $scope.sortableOptions = { //TODO
+  //TODO store active widgets in local storage on add/remove/reorder
+  $scope.sortableOptions = {
+    stop: function () {
+      console.log(_.map($scope.widgets, function (widget) {
+        return widget.title;
+      }));
+    }
   };
 });
 
