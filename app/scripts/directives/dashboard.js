@@ -11,7 +11,7 @@ angular.module('app').directive('dashboard', function () {
     templateUrl: 'scripts/widgets/dashboard.html',
     scope: true,
     controller: 'DashboardController',
-    link: function (scope, element, attrs, DashboardController) {
+    link: function (scope, element, attrs) {
       scope.widgets = scope.$eval(attrs.widgets);
       scope.options = scope.$eval(attrs.dashboard);
 
