@@ -1,14 +1,17 @@
-angular.module('app').directive('one', function ($timeout) {
+angular.module('app').directive('one', function ($interval) {
   return {
     restrict: 'A',
     templateUrl: 'scripts/widgets/one/one.html',
     link: function postLink(scope, element, attrs) {
       function update() {
         scope.time = new Date().toLocaleTimeString();
-        $timeout(update, 500);
       }
 
-      update();
+      var promise = $interval(update, 500);
+
+      scope.$on('$destroy', function () {
+        $interval.cancel(promise);
+      });
     }
   };
 });
