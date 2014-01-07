@@ -9,7 +9,7 @@ Dashboard/Widgets functionality with AngularJS.
 
  - Widgets are instantiated dynamically (from corresponding directive)
 
- - Widgets drag and drop
+ - Widgets drag and drop (with jQuery UI Sortable)
 
 ![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
