@@ -4,7 +4,6 @@ angular.module('ui.dashboard.widgets', []);
 
 angular.module('ui.dashboard', ['ui.sortable', 'ui.dashboard.widgets']);
 
-
 angular.module('ui.dashboard')
   .controller('DashboardController', function ($scope) {
     //TODO store active widgets in local storage on add/remove/reorder
