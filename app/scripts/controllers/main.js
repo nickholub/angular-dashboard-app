@@ -8,17 +8,17 @@ angular.module('app').controller('MainCtrl', function () {
 
     widgets.push({
       title: 'Widget 1',
-      kind: 'two'
+      directive: 'two'
     });
 
     widgets.push({
       title: 'Widget 2',
-      kind: 'one'
+      directive: 'one'
     });
 
     widgets.push({
       title: 'Widget 3',
-      kind: 'two'
+      directive: 'two'
     });
 
     $scope.widgets = widgets;
@@ -30,7 +30,7 @@ angular.module('app').controller('MainCtrl', function () {
     $scope.addWidget = function (id) {
       $scope.widgets.push({
         title: 'Widget ' + count++,
-        kind: id
+        directive: id
       });
     };
 
