@@ -3,10 +3,10 @@
 angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   var widgetDefinitions = [
     {
-      directive: 'one'
+      directive: 'time'
     },
     {
-      directive: 'two'
+      directive: 'random'
     },
     {
       directive: 'scope-watch',
