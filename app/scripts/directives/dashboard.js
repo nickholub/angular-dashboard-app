@@ -2,7 +2,7 @@
 
 angular.module('ui.dashboard.widgets', []);
 
-angular.module('ui.dashboard', ['ui.sortable', 'ui.dashboard.widgets']);
+angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.dashboard.widgets']);
 
 angular.module('ui.dashboard')
   .controller('DashboardController', function ($scope) {
@@ -27,6 +27,11 @@ angular.module('ui.dashboard')
         scope.options = scope.$eval(attrs.dashboard);
 
         var count = scope.widgets.length + 1;
+
+        scope.addWidgetInternal = function (event, directive) {
+          event.preventDefault();
+          scope.addWidget(directive);
+        };
 
         scope.addWidget = function (directive, options) {
           scope.widgets.push({
