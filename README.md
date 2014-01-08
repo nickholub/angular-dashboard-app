@@ -11,6 +11,10 @@ Dashboard/Widgets functionality with AngularJS.
 
  - Widgets drag and drop (with jQuery UI Sortable)
 
+ - Fluid layout (widgets can have percentage width)
+
+ - Any directive can be a widget
+
 ![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
 ## Running Application
