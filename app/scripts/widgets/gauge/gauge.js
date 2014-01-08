@@ -12,7 +12,7 @@ angular.module('ui.dashboard.widgets')
       },
       link: function (scope, element, attrs) {
         var config = {
-          size: 250,
+          size: 200,
           label: attrs.label,
           min: undefined !== scope.min ? scope.min : 0,
           max: undefined !== scope.max ? scope.max : 100,
