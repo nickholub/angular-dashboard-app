@@ -18,13 +18,13 @@
     </button>
     </div>
 
-    <ul ui-sortable="sortableOptions" ng-model="widgets" class="list">
-        <li ng-repeat="widget in widgets" class="widget" widget>
+    <div ui-sortable="sortableOptions" ng-model="widgets" class="list">
+        <div ng-repeat="widget in widgets" class="widget" widget>
             <div class="widget-header">
                 {{widget.title}}: <span class="label label-primary">{{widget.directive}}</span>
                 <span ng-click="removeWidget(widget);" class="glyphicon glyphicon-remove"></span>
             </div>
             <div class="widget-content"></div>
-        </li>
-    </ul>
+        </div>
+    </div>
 </div>
