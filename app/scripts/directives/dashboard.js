@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ui.dashboard.widgets', []);
+angular.module('ui.dashboard.widgets', ['ngGrid']);
 
 angular.module('ui.dashboard', ['ui.bootstrap', 'ui.sortable', 'ui.dashboard.widgets']);
 

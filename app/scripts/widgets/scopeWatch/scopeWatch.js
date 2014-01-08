@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('scopeWatch', function ($interval) {
+  .directive('scopeWatch', function () {
     return {
       restrict: 'A',
       templateUrl: 'scripts/widgets/scopeWatch/scopeWatch.html',

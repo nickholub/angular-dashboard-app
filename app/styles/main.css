@@ -35,3 +35,9 @@ body {
 .widget .alert {
     margin: 0;
 }
+
+.widget .top-n .grid {
+    width: 100%;
+    height: 150px;
+    border: 1px solid rgb(212,212,212);
+}
