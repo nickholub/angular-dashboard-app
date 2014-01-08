@@ -13,7 +13,7 @@ Dashboard/Widgets functionality with AngularJS.
 
  - Fluid layout (widgets can have percentage width)
 
- - Any directive can be a widget
+ - Any directive can be a widget (e.g. AngularUI directives)
 
 ![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
