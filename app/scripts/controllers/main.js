@@ -37,13 +37,14 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     defaultWidgets: defaultWidgets
   };
 
+  // random scope value (scope-watch widget)
   $interval(function () {
     $scope.randomValue = Math.random();
   }, 500);
 
+  // top 10 (topN widget)
   $interval(function () {
-    var topTen = [];
-    topTen = _.map(_.range(1, 11), function (index) {
+    var topTen = _.map(_.range(1, 11), function (index) {
       return {
         name: 'item' + index,
         value: Math.floor(Math.random() * 100)
@@ -52,12 +53,13 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     $scope.topTen = topTen;
   }, 1000);
 
+  // progress bar (progressbar widget)
   $scope.progress = 10;
-
   $interval(function () {
     $scope.progress = ($scope.progress + 10) % 100;
   }, 1000);
 
+  // external controls
   $scope.addWidget = function (id) {
     $scope.dashboardOptions.addWidget(id);
   };
