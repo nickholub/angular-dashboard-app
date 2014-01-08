@@ -27,11 +27,11 @@ angular.module('ui.dashboard')
 
         var count = 1;
 
-        scope.addWidget = function (directive, options) {
+        scope.addWidget = function (directive, attrs) {
           scope.widgets.push({
             title: 'Widget ' + count++,
             directive: directive,
-            options: options
+            attrs: attrs
           });
         };
 
@@ -45,12 +45,12 @@ angular.module('ui.dashboard')
 
         scope.widgets = [];
         _.each(scope.options.defaultWidgets, function (widgetDefinition) {
-          scope.addWidget(widgetDefinition.directive, widgetDefinition.options);
+          scope.addWidget(widgetDefinition.directive, widgetDefinition.attrs);
         });
 
         scope.addWidgetInternal = function (event, widget) {
           event.preventDefault();
-          scope.addWidget(widget.directive, widget.options);
+          scope.addWidget(widget.directive, widget.attrs);
         };
 
         // allow adding widgets externally

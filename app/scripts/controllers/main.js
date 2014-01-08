@@ -10,16 +10,24 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     },
     {
       directive: 'scope-watch',
-      options: {
-        propertyName: 'randomValue'
+      attrs: {
+        value: 'randomValue'
       }
     },
     {
       directive: 'top-n',
-      options: {
-        propertyName: 'topTen'
+      attrs: {
+        data: 'topTen'
       }
-    }
+    },
+    {
+      directive: 'progressbar',
+      attrs: {
+        class: 'progress-striped',
+        type: 'success',
+        value: 'progress'
+      }
+    },
   ];
 
   var defaultWidgets = _.clone(widgetDefinitions);
@@ -44,6 +52,12 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     $scope.topTen = topTen;
   }, 1000);
 
+  $scope.progress = 10;
+
+  $interval(function () {
+    $scope.progress = ($scope.progress + 10) % 100;
+  }, 1000);
+
   $scope.addWidget = function (id) {
     $scope.dashboardOptions.addWidget(id);
   };
@@ -51,7 +65,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   $scope.addWidgetScopeWatch = function () {
     $scope.dashboardOptions.addWidget('scope-watch',
       {
-        propertyName: 'randomValue'
+        value: 'randomValue'
       });
   };
 });

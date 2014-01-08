@@ -4,7 +4,11 @@ angular.module('ui.dashboard.widgets')
   .directive('topN', function () {
     return {
       restrict: 'A',
+      replace: true,
       templateUrl: 'scripts/widgets/topN/topN.html',
+      scope: {
+        data: '='
+      },
       controller: function ($scope) {
         $scope.gridOptions = {
           data: 'items',
@@ -16,16 +20,14 @@ angular.module('ui.dashboard.widgets')
           ]
         };
       },
-      link: function postLink(scope, element, attrs) {
-        var options = scope.widget.options;
-
-        if (options && options.propertyName) {
-          scope.$watch(options.propertyName, function (list) {
-            scope.items = _.sortBy(list, function (item) {
-              return (- item.value);
+      link: function postLink(scope) {
+        scope.$watch('data', function (data) {
+          if (data) {
+            scope.items = _.sortBy(data, function (item) {
+              return (-item.value);
             });
-          });
-        }
+          }
+        });
       }
     };
   });

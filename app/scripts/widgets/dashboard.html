@@ -22,10 +22,12 @@
         <div ng-repeat="widget in widgets" class="widget-container">
             <div class="widget" widget>
                 <div class="widget-header">
-                    {{widget.title}}: <span class="label label-primary">{{widget.directive}}</span>
+                    {{widget.title}} <span class="label label-primary">{{widget.directive}}</span>
                     <span ng-click="removeWidget(widget);" class="glyphicon glyphicon-remove"></span>
                 </div>
-                <div class="widget-content"></div>
+                <div class="widget-content">
+                    <div></div>
+                </div>
             </div>
         </div>
     </div>
