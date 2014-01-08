@@ -5,7 +5,7 @@ angular.module('ui.dashboard.widgets')
     return {
       restrict: 'A',
       templateUrl: 'scripts/widgets/one/one.html',
-      link: function postLink(scope, element, attrs) {
+      link: function (scope) {
         function update() {
           scope.time = new Date().toLocaleTimeString();
         }

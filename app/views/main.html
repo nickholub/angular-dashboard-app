@@ -1,20 +1,14 @@
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <h2>External Controls</h2>
 
-        <p>
-            <button ng-click="addWidget('one');" type="button" class="btn btn-success">one</button>
-        <p>
-
-        <p>
-            <button ng-click="addWidget('two');" type="button" class="btn btn-info">two</button>
-        </p>
-
-        <p>
-            <button ng-click="addWidgetScopeWatch();" type="button" class="btn btn-warning">scope-watch</button>
-        </p>
+        <button ng-click="addWidget('one');" type="button" class="btn btn-success">one</button>
+        <button ng-click="addWidget('two');" type="button" class="btn btn-info">two</button>
+        <button ng-click="addWidgetScopeWatch();" type="button" class="btn btn-warning">scope-watch</button>
     </div>
-    <div class="col-md-8">
+</div>
+<div class="row">
+    <div class="col-md-12">
         <h2>Dashboard</h2>
         <div dashboard="dashboardOptions"></div>
     </div>

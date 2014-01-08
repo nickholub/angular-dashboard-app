@@ -27,11 +27,6 @@ angular.module('ui.dashboard')
 
         var count = 1;
 
-        scope.addWidgetInternal = function (event, widget) {
-          event.preventDefault();
-          scope.addWidget(widget.directive, widget.options);
-        };
-
         scope.addWidget = function (directive, options) {
           scope.widgets.push({
             title: 'Widget ' + count++,
@@ -52,6 +47,11 @@ angular.module('ui.dashboard')
         _.each(scope.options.defaultWidgets, function (widgetDefinition) {
           scope.addWidget(widgetDefinition.directive, widgetDefinition.options);
         });
+
+        scope.addWidgetInternal = function (event, widget) {
+          event.preventDefault();
+          scope.addWidget(widget.directive, widget.options);
+        };
 
         // allow adding widgets externally
         scope.options.addWidget = scope.addWidget;

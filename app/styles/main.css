@@ -10,12 +10,15 @@ body {
     padding-left: 0;
 }
 
-.widget {
-    display: inline-block;
+.widget-container {
     float:left;
+    display: inline-block;
+    width: 33%;
+}
+
+.widget {
     margin: 0 1em 1em 0;
     background-color: white;
-    width: 200px;
     border: 2px solid #444;
     border-radius: 5px;
 }
