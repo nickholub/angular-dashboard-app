@@ -44,6 +44,10 @@ angular.module('ui.dashboard')
           scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
         };
 
+        scope.clear = function () {
+          scope.widgets = [];
+        };
+
         scope.widgets = [];
         _.each(scope.options.defaultWidgets, function (widgetDefinition) {
           scope.addWidget(widgetDefinition.directive, widgetDefinition.options);
