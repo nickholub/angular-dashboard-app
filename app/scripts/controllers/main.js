@@ -3,21 +3,33 @@
 angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   var widgetDefinitions = [
     {
-      directive: 'time'
+      directive: 'time',
+      style: {
+        width: '33%'
+      }
     },
     {
-      directive: 'random'
+      directive: 'random',
+      style: {
+        width: '33%'
+      }
     },
     {
       directive: 'scope-watch',
       attrs: {
         value: 'randomValue'
+      },
+      style: {
+        width: '34%'
       }
     },
     {
       directive: 'top-n',
       attrs: {
         data: 'topTen'
+      },
+      style: {
+        width: '50%'
       }
     },
     {
@@ -26,8 +38,11 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
         class: 'progress-striped',
         type: 'success',
         value: 'progress'
+      },
+      style: {
+        width: '30%'
       }
-    },
+    }
   ];
 
   var defaultWidgets = _.clone(widgetDefinitions);

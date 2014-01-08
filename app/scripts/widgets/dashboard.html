@@ -19,7 +19,7 @@
     </div>
 
     <div ui-sortable="sortableOptions" ng-model="widgets" class="list">
-        <div ng-repeat="widget in widgets" class="widget-container">
+        <div ng-repeat="widget in widgets" ng-style="widget.style" class="widget-container">
             <div class="widget" widget>
                 <div class="widget-header">
                     {{widget.title}} <span class="label label-primary">{{widget.directive}}</span>
