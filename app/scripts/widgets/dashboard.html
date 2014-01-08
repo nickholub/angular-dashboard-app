@@ -2,8 +2,9 @@
 <div class="btn-group">
     <button type="button" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Add Widget <span class="caret"></span></button>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#" ng-click="addWidgetInternal($event, 'one');">One</a></li>
-        <li><a href="#" ng-click="addWidgetInternal($event, 'two');">Two</a></li>
+        <li ng-repeat="widget in options.widgetDefinitions">
+            <a href="#" ng-click="addWidgetInternal($event, widget);"><span class="label label-primary">{{widget.directive}}</span></a>
+        </li>
     </ul>
 </div>
 <ul ui-sortable="sortableOptions" ng-model="widgets" class="list">

@@ -23,14 +23,13 @@ angular.module('ui.dashboard')
       scope: true,
       controller: 'DashboardController',
       link: function (scope, element, attrs) {
-        scope.widgets = scope.$eval(attrs.widgets);
         scope.options = scope.$eval(attrs.dashboard);
 
-        var count = scope.widgets.length + 1;
+        var count = 1;
 
-        scope.addWidgetInternal = function (event, directive) {
+        scope.addWidgetInternal = function (event, widget) {
           event.preventDefault();
-          scope.addWidget(directive);
+          scope.addWidget(widget.directive, widget.options);
         };
 
         scope.addWidget = function (directive, options) {
@@ -44,6 +43,11 @@ angular.module('ui.dashboard')
         scope.removeWidget = function (widget) {
           scope.widgets.splice(_.indexOf(scope.widgets, widget), 1);
         };
+
+        scope.widgets = [];
+        _.each(scope.options.defaultWidgets, function (widgetDefinition) {
+          scope.addWidget(widgetDefinition.directive, widgetDefinition.options);
+        });
 
         // allow adding widgets externally
         scope.options.addWidget = scope.addWidget;
