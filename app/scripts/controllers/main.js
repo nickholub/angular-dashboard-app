@@ -29,7 +29,16 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
         data: 'topTen'
       },
       style: {
-        width: '50%'
+        width: '40%'
+      }
+    },
+    {
+      directive: 'gauge',
+      attrs: {
+        value: 'percentage'
+      },
+      style: {
+        width: '30%'
       }
     },
     {
@@ -37,7 +46,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       attrs: {
         class: 'progress-striped',
         type: 'success',
-        value: 'progress'
+        value: 'percentage'
       },
       style: {
         width: '30%'
@@ -68,10 +77,10 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     $scope.topTen = topTen;
   }, 1000);
 
-  // progress bar (progressbar widget)
-  $scope.progress = 10;
+  // percentage (gauge widget, progressbar widget)
+  $scope.percentage = 10;
   $interval(function () {
-    $scope.progress = ($scope.progress + 10) % 100;
+    $scope.percentage = ($scope.percentage + 10) % 100;
   }, 1000);
 
   // external controls
