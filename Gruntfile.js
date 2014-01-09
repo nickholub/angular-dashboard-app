@@ -12,6 +12,36 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   grunt.initConfig({
+    html2js: {
+      dist: {
+        options: {
+          module: 'ui.dashboard', // no bundle module for all the html2js templates
+          base: '.'
+        },
+        files: [{
+          expand: true,
+          src: ['<%= yeoman.app %>/scripts/widgets/dashboard.html'],
+          ext: '.html.js'
+        }]
+      }
+    },
+    srcFiles: [
+      '<%= yeoman.app %>/scripts/directives/dashboard.js',
+      '<%= yeoman.app %>/scripts/widgets/dashboard.html.js'
+    ],
+    concat: {
+      dist: {
+        src: ['<%= srcFiles %>'],
+        dest: 'dist/dashboard.js'
+      },
+      dist_tpls: {
+        options: {
+          banner: ''
+        },
+        src: ['<%= srcFiles %>'],
+        dest: 'dist/abc.js'
+      }
+    },
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',

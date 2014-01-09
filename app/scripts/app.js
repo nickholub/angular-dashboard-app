@@ -1,11 +1,14 @@
 'use strict';
 
+angular.module('ui.dashboard.widgets', ['ngGrid']);
+
 angular.module('app', [
   'ngRoute',
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.dashboard'
+  'ui.dashboard',
+  'ui.dashboard.widgets'
 ])
   .config(function ($routeProvider) {
     $routeProvider

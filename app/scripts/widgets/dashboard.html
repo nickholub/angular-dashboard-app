@@ -9,14 +9,14 @@
         </ul>
     </div>
 
-    <button ng-click="clear();" type="button" class="btn btn-info">Clear</button>
-
     <div class="btn-group">
-    <button ng-repeat="widget in options.widgetDefinitions"
-            ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
-        {{widget.directive}}
-    </button>
+        <button ng-repeat="widget in options.widgetDefinitions"
+                ng-click="addWidgetInternal($event, widget);" type="button" class="btn btn-primary">
+            {{widget.directive}}
+        </button>
     </div>
+
+    <button ng-click="clear();" type="button" class="btn btn-info">Clear</button>
 
     <div ui-sortable="sortableOptions" ng-model="widgets" class="list">
         <div ng-repeat="widget in widgets" ng-style="widget.style" class="widget-container">

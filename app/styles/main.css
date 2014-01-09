@@ -3,6 +3,7 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
 }
+/*
 
 .list {
     list-style: none outside none;
@@ -36,6 +37,7 @@ body {
 .widget-content {
     padding: 0.4em;
 }
+*/
 
 .widget .alert {
     margin: 0;
