@@ -301,7 +301,8 @@ module.exports = function (grunt) {
       theme: 'default',
       development: {
         options: {
-          paths: ["<%= yeoman.app %>/styles"]
+          paths: ["<%= yeoman.app %>/styles"],
+          sourceMap: true
         },
         files: {
           ".tmp/styles/main.css": [".tmp/styles/main.less"]
