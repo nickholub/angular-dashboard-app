@@ -28,11 +28,7 @@ module.exports = function (grunt) {
       },
       less: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
-        tasks: ['less:development']
-      },
-      styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-        tasks: ['copy:styles', 'autoprefixer']
+        tasks: ['concat:less','less:development']
       },
       livereload: {
         options: {
@@ -137,9 +133,12 @@ module.exports = function (grunt) {
     },
     // not used since Uglify task does concat,
     // but still available if needed
-    /*concat: {
-      dist: {}
-    },*/
+    concat: {
+      less: {
+        src: ["<%= yeoman.app %>/styles/themes/<%= less.theme %>.less","<%= yeoman.app %>/styles/index.less"],
+        dest: '.tmp/styles/main.less'
+      }
+    },
     rev: {
       dist: {
         files: {
@@ -253,7 +252,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'coffee:dist',
-        'copy:styles'
+        'copy:styles',
+        'concat:less'
       ],
       test: [
         'coffee',
@@ -298,20 +298,21 @@ module.exports = function (grunt) {
       }
     },
     less: {
+      theme: 'default',
       development: {
         options: {
-          // paths: ["<%= yeoman.app %>/styles"]
+          paths: ["<%= yeoman.app %>/styles"]
         },
         files: {
-          ".tmp/styles/main.css": ["<%= yeoman.app %>/styles/themes/default.less","<%= yeoman.app %>/styles/index.less"]
+          ".tmp/styles/main.css": [".tmp/styles/main.less"]
         }
       },
       production: {
         options: {
-          // paths: ["<%= yeoman.app %>/styles"]
+          paths: ["<%= yeoman.app %>/styles"]
         },
         files: {
-          ".tmp/styles/main.css": ["<%= yeoman.app %>/styles/themes/default.less","<%= yeoman.app %>/styles/index.less"]
+          ".tmp/styles/main.css": [".tmp/styles/main.less"]
         }
       },
     }
