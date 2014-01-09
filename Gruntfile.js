@@ -26,6 +26,10 @@ module.exports = function (grunt) {
         files: ['test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
       },
+      less: {
+        files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
+        tasks: ['less:development']
+      },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['copy:styles', 'autoprefixer']
@@ -292,6 +296,24 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    less: {
+      development: {
+        options: {
+          // paths: ["<%= yeoman.app %>/styles"]
+        },
+        files: {
+          ".tmp/styles/main.css": ["<%= yeoman.app %>/styles/themes/default.less","<%= yeoman.app %>/styles/index.less"]
+        }
+      },
+      production: {
+        options: {
+          // paths: ["<%= yeoman.app %>/styles"]
+        },
+        files: {
+          ".tmp/styles/main.css": ["<%= yeoman.app %>/styles/themes/default.less","<%= yeoman.app %>/styles/index.less"]
+        }
+      },
     }
   });
 
@@ -303,9 +325,10 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'concurrent:server',
+      'less:development',
       'autoprefixer',
       'connect:livereload',
-      'watch'
+      'watch',
     ]);
   });
 
