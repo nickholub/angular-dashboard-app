@@ -1,0 +1,85 @@
+@filePath: '../bower_components/ng-grid/src/less';
+
+@backgroundColor: @table-bg;
+
+// Gray color for header and footer and panels
+@darkGray: @gray-dark;
+
+@panelColor: @darkGray;
+
+// Gray colors used for row alternation
+@lightGray: @gray-light;
+@middleGray: @gray;
+
+// Gray for borders
+@darkAccentGray: @gray-darker;
+@borderColor: @darkAccentGray;
+
+// Used for columnmenu buton
+@grayGreen: #bdd0cb;
+
+// Used for column menu background
+@darkGrayGreen: darken(@grayGreen, 10%);
+
+// Used for row selections
+@grayBlue: #C9DDE1; // #b3c4c7;
+
+// Used for cell selections
+@darkGrayBlue: #b3c4c7;
+
+// Color for buttons
+@buttonColor: lighten(#333, 10%);
+
+.ngGrid {
+  background-color: @backgroundColor;
+
+  input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+  }
+
+  input {
+    vertical-align:top;
+  }
+}
+
+.ngGrid.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.ngViewport {
+  overflow: auto;
+  min-height: 20px;
+}
+
+.ngViewport:focus {
+    outline: none;
+}
+
+.ngCanvas {
+  position: relative;
+}
+
+.ngVerticalBar {
+  position: absolute;
+  right:0;
+  width:0;
+}
+
+.ngVerticalBarVisible {
+  width: 1px;
+  background-color: @borderColor;
+}
+
+@import '@{filePath}/header';
+@import '@{filePath}/menu';
+@import '@{filePath}/grouping';
+@import '@{filePath}/row';
+@import '@{filePath}/cell';
+@import '@{filePath}/selection';
+@import '@{filePath}/footer';
+@import '@{filePath}/paging';
