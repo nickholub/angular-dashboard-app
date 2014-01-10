@@ -57,6 +57,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   var defaultWidgets = _.clone(widgetDefinitions);
 
   $scope.dashboardOptions = {
+    widgetButtons: true,
     widgetDefinitions: widgetDefinitions,
     defaultWidgets: defaultWidgets
   };
