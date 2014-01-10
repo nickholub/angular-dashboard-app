@@ -55,8 +55,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
     {
       directive: 'line-chart',
       attrs: {
-        chart: 'chart',
-        style: 'height: 200px'
+        chart: 'chart'
       },
       style: {
         width: '50%'
