@@ -137,7 +137,7 @@ module.exports = function (grunt) {
     // but still available if needed
     concat: {
       less: {
-        src: ["<%= yeoman.app %>/styles/themes/<%= less.theme %>.less","<%= yeoman.app %>/styles/index.less"],
+        src: ['<%= yeoman.app %>/styles/themes/<%= less.theme %>.less','<%= yeoman.app %>/styles/index.less'],
         dest: '.tmp/styles/main.less'
       }
     },
@@ -303,19 +303,19 @@ module.exports = function (grunt) {
       theme: 'default',
       development: {
         options: {
-          paths: ["<%= yeoman.app %>/styles"],
+          paths: ['<%= yeoman.app %>/styles'],
           sourceMap: true
         },
         files: {
-          ".tmp/styles/main.css": [".tmp/styles/main.less"]
+          '.tmp/styles/main.css': ['.tmp/styles/main.less']
         }
       },
       production: {
         options: {
-          paths: ["<%= yeoman.app %>/styles"]
+          paths: ['<%= yeoman.app %>/styles']
         },
         files: {
-          ".tmp/styles/main.css": [".tmp/styles/main.less"]
+          '.tmp/styles/main.css': ['.tmp/styles/main.less']
         }
       },
     }
