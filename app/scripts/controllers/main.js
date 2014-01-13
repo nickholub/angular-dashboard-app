@@ -3,19 +3,19 @@
 angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   var widgetDefinitions = [
     {
-      directive: 'time',
+      name: 'time',
       style: {
         width: '33%'
       }
     },
     {
-      directive: 'random',
+      name: 'random',
       style: {
         width: '33%'
       }
     },
     {
-      directive: 'scope-watch',
+      name: 'scope-watch',
       attrs: {
         value: 'randomValue'
       },
@@ -24,7 +24,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      directive: 'top-n',
+      name: 'top-n',
       attrs: {
         data: 'topTen'
       },
@@ -33,7 +33,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      directive: 'gauge',
+      name: 'gauge',
       attrs: {
         value: 'percentage'
       },
@@ -43,7 +43,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      directive: 'progressbar',
+      name: 'progressbar',
       attrs: {
         class: 'progress-striped',
         type: 'success',
@@ -54,14 +54,14 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      directive: 'progressbar2', //TODO name
+      name: 'progressbar2', //TODO name
       template: '<div progressbar class="progress-striped" type="info" value="percentage">{{percentage}}%</div>',
       style: {
         width: '30%'
       }
     },
     {
-      directive: 'line-chart',
+      name: 'line-chart',
       attrs: {
         chart: 'chart'
       },
@@ -141,13 +141,13 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   // external controls
   $scope.addWidget = function (directive) {
     $scope.dashboardOptions.addWidget({
-      directive: directive
+      name: directive
     });
   };
 
   $scope.addWidgetScopeWatch = function () {
     $scope.dashboardOptions.addWidget({
-      directive: 'scope-watch',
+      name: 'scope-watch',
       attrs: {
         value: 'randomValue'
       }
