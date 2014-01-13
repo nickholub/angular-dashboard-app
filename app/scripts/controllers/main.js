@@ -54,6 +54,13 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
+      directive: 'progressbar2', //TODO name
+      template: '<div progressbar class="progress-striped" type="info" value="percentage">{{percentage}}%</div>',
+      style: {
+        width: '30%'
+      }
+    },
+    {
       directive: 'line-chart',
       attrs: {
         chart: 'chart'
@@ -99,11 +106,13 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   // line chart
   var data = [];
   var chartValue = 50;
+
   function nextValue() {
     chartValue += Math.random() * 40 - 20;
     chartValue = chartValue < 0 ? 0 : chartValue > 100 ? 100 : chartValue;
     return chartValue;
   }
+
   var now = Date.now();
   for (var i = max - 1; i >= 0; i--) {
     data.push({
@@ -130,14 +139,18 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   }, 1000);
 
   // external controls
-  $scope.addWidget = function (id) {
-    $scope.dashboardOptions.addWidget(id);
+  $scope.addWidget = function (directive) {
+    $scope.dashboardOptions.addWidget({
+      directive: directive
+    });
   };
 
   $scope.addWidgetScopeWatch = function () {
-    $scope.dashboardOptions.addWidget('scope-watch',
-      {
+    $scope.dashboardOptions.addWidget({
+      directive: 'scope-watch',
+      attrs: {
         value: 'randomValue'
-      });
+      }
+    });
   };
 });
