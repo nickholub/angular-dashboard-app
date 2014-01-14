@@ -9,7 +9,6 @@ angular.module('ui.dashboard.widgets')
       },
       replace: true,
       link: function postLink(scope, element) {
-        console.log('link');
         var lineChart = new google.visualization.LineChart(element[0]);
 
         function draw(chart) {
