@@ -15,6 +15,8 @@ Dashboard/Widgets functionality with AngularJS.
 
  - Any directive can be a widget (e.g. AngularUI directives)
 
+[Running demo with real-time data](http://nickholub.github.io/angular-dashboard-app)
+
 ![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
 ## Running Application
