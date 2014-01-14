@@ -95,7 +95,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   }, 1000);
 
   // percentage (gauge widget, progressbar widget)
-  $scope.percentage = 10;
+  $scope.percentage = 5;
   $interval(function () {
     $scope.percentage = ($scope.percentage + 10) % 100;
   }, 1000);
