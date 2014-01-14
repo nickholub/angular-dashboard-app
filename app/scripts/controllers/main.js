@@ -38,8 +38,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
         value: 'percentage'
       },
       style: {
-        width: '30%',
-        'max-width': '300px'
+        width: '250px'
       }
     },
     {
