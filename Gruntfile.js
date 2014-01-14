@@ -39,8 +39,8 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.app %>/bower_components/angular-ui-dashboard/{,*/}*.js',
-          '<%= yeoman.app %>/bower_components/angular-ui-dashboard/{,*/}*.css'
+          '<%= yeoman.app %>/bower_components/angular-ui-dashboard/dist/{,*/}*.js',
+          '<%= yeoman.app %>/bower_components/angular-ui-dashboard/dist/{,*/}*.css'
         ]
       }
     },
