@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('random', function ($interval) {
+  .directive('wtRandom', function ($interval) {
     return {
       restrict: 'A',
       replace: true,

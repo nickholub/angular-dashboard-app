@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('time', function ($interval) {
+  .directive('wtTime', function ($interval) {
     return {
       restrict: 'A',
       replace: true,

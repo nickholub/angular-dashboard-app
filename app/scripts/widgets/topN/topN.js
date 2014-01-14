@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('topN', function () {
+  .directive('wtTopN', function () {
     return {
       restrict: 'A',
       replace: true,

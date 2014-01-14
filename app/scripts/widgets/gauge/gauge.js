@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('gauge', function () {
+  .directive('wtGauge', function () {
     return {
       replace: true,
       scope: {

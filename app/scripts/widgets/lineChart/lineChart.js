@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('lineChart', function () {
+  .directive('wtLineChart', function () {
     return {
       template: '<div></div>',
       scope: {

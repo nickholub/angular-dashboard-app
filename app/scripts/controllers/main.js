@@ -3,19 +3,19 @@
 angular.module('app').controller('MainCtrl', function ($scope, $interval) {
   var widgetDefinitions = [
     {
-      name: 'time',
+      name: 'wt-time',
       style: {
         width: '33%'
       }
     },
     {
-      name: 'random',
+      name: 'wt-random',
       style: {
         width: '33%'
       }
     },
     {
-      name: 'scope-watch',
+      name: 'wt-scope-watch',
       attrs: {
         value: 'randomValue'
       },
@@ -24,7 +24,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      name: 'top-n',
+      name: 'wt-top-n',
       attrs: {
         data: 'topTen'
       },
@@ -33,7 +33,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      name: 'gauge',
+      name: 'wt-gauge',
       attrs: {
         value: 'percentage'
       },
@@ -60,7 +60,7 @@ angular.module('app').controller('MainCtrl', function ($scope, $interval) {
       }
     },
     {
-      name: 'line-chart',
+      name: 'wt-line-chart',
       attrs: {
         chart: 'chart'
       },

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ui.dashboard.widgets')
-  .directive('scopeWatch', function () {
+  .directive('wtScopeWatch', function () {
     return {
       restrict: 'A',
       replace: true,
