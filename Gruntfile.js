@@ -137,7 +137,7 @@ module.exports = function (grunt) {
     // but still available if needed
     concat: {
       less: {
-        src: ['<%= yeoman.app %>/styles/themes/<%= less.theme %>.less','<%= yeoman.app %>/styles/index.less'],
+        src: ['<%= yeoman.app %>/styles/themes/<%= less.theme %>.less','<%= yeoman.app %>/styles/main.less'],
         dest: '.tmp/styles/main.less'
       }
     },
@@ -242,6 +242,16 @@ module.exports = function (grunt) {
           src: [
             'generated/*'
           ]
+        }, {
+          expand: true,
+          cwd: '.tmp/styles',
+          dest: '<%= yeoman.dist %>/styles',
+          src: '{,*/}*.css'
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts',
+          dest: '<%= yeoman.dist %>/scripts',
+          src: '**/*.html'
         }]
       },
       styles: {
@@ -317,7 +327,7 @@ module.exports = function (grunt) {
         files: {
           '.tmp/styles/main.css': ['.tmp/styles/main.less']
         }
-      },
+      }
     }
   });
 
@@ -348,8 +358,9 @@ module.exports = function (grunt) {
     'clean:dist',
     'useminPrepare',
     'concurrent:dist',
-    'autoprefixer',
     'concat',
+    'less:production',
+    'autoprefixer',
     'copy:dist',
     'cdnify',
     'ngmin',
