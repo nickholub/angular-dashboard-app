@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.service', [])
-  .constant('stackedChartData', [
+  .constant('stackedAreaChartSampleData', [
     {
       key: 'Series 1',
       values: [

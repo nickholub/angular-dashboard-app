@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('MainCtrl', function ($scope, $interval, stackedChartData) {
+  .controller('MainCtrl', function ($scope, $interval, stackedAreaChartSampleData) {
     var widgetDefinitions = [
       {
         name: 'wt-time',
@@ -72,7 +72,7 @@ angular.module('app')
       {
         name: 'nvd3-stacked-area-chart',
         attrs: {
-          data: 'exampleData',
+          data: 'stackedAreaChartData',
           height: '400',
           showXAxis: 'true',
           showYAxis: 'true',
@@ -153,7 +153,7 @@ angular.module('app')
     }, 1000);
 
     // nvd3-stacked-area-chart
-    $scope.exampleData = stackedChartData;
+    $scope.stackedAreaChartData = stackedAreaChartSampleData;
 
     $scope.xAxisTickFormat = function () {
       return function (d) {
