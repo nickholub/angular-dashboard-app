@@ -25,6 +25,16 @@ angular.module('app')
         }
       },
       {
+        name: 'wt-pie-chart',
+        style: {
+          width: '350px',
+          height: '350px'
+        },
+        attrs: {
+          data: 'pieChartData'
+        }
+      },
+      {
         name: 'wt-top-n',
         attrs: {
           data: 'topTen'
@@ -80,16 +90,6 @@ angular.module('app')
         },
         style: {
           width: '50%'
-        }
-      },
-      {
-        name: 'wt-pie-chart',
-        style: {
-          width: '350px',
-          height: '350px'
-        },
-        attrs: {
-          data: 'pieChartData'
         }
       }
     ];
