@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('MainCtrl', function ($scope, $interval, stackedAreaChartSampleData) {
+  .controller('MainCtrl', function ($scope, $interval, stackedAreaChartSampleData, pieChartSampleData) {
     var widgetDefinitions = [
       {
         name: 'wt-time',
@@ -80,6 +80,16 @@ angular.module('app')
         },
         style: {
           width: '50%'
+        }
+      },
+      {
+        name: 'wt-pie-chart',
+        style: {
+          width: '350px',
+          height: '350px'
+        },
+        attrs: {
+          data: 'pieChartData'
         }
       }
     ];
@@ -161,7 +171,10 @@ angular.module('app')
       };
     };
 
-// external controls
+    // pie chart
+    $scope.pieChartData = pieChartSampleData;
+
+    // external controls
     $scope.addWidget = function (directive) {
       $scope.dashboardOptions.addWidget({
         name: directive
