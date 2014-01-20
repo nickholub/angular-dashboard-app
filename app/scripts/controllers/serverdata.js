@@ -14,6 +14,14 @@ angular.module('app')
         attrs: {
           data: 'serverTopTen'
         }
+      },
+      {
+        name: 'topics',
+        templateUrl: 'template/topics.html',
+        style: {
+          width: '33%',
+          height: '200px'
+        }
       }
     ];
 
@@ -35,9 +43,15 @@ angular.module('app')
       var list = [];
       _.each(message, function(value, key) {
         list.push( { name: key, value: parseInt(value, 10) } );
-      });
+      }, $scope);
 
       $scope.serverTopTen = list;
       $scope.$apply();
     }, $scope);
+
+    webSocket.subscribe('_latestTopics', function (message) {
+      $scope.topics = message;
+      $scope.$apply();
+    }, $scope);
+    webSocket.send({ type: 'getLatestTopics' });
   });
