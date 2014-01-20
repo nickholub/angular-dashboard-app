@@ -45,15 +45,15 @@ function createBroadcast(topic) {
 
   function broadcast() {
     randomValue = nextValue(randomValue);
-      var data = { value: randomValue };
-      var msgObject = { topic: topic, data: data};
-      var msg = JSON.stringify(msgObject);
+    var data = { value: randomValue };
+    var msgObject = { topic: topic, data: data};
+    var msg = JSON.stringify(msgObject);
 
-      for (var key in clients) {
-          if(clients.hasOwnProperty(key)) {
-              clients[key].write(msg);
-          }
+    for (var key in clients) {
+      if (clients.hasOwnProperty(key)) {
+        clients[key].write(msg);
       }
+    }
   }
 
   return broadcast;

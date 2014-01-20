@@ -4,6 +4,7 @@ angular.module('ui.dashboard.widgets', ['ngGrid']);
 
 angular.module('app', [
   'app.service',
+  'app.websocket',
   'ngRoute',
   'ngCookies',
   'ngResource',
@@ -12,11 +13,20 @@ angular.module('app', [
   'nvd3ChartDirectives',
   'ui.dashboard.widgets'
 ])
-  .config(function ($routeProvider) {
+  .constant('settings', window.settings)
+  .config(function ($routeProvider, webSocketProvider, settings) {
+    if (settings) {
+      webSocketProvider.setWebSocketURL(settings.webSocketURL);
+    }
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      })
+      .when('/serverdata', {
+        templateUrl: 'views/main.html',
+        controller: 'ServerDataCtrl'
       })
       .otherwise({
         redirectTo: '/'

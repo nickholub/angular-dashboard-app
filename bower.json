@@ -20,7 +20,8 @@
     "ng-grid": "~2.0.7",
     "d3": "~3.3.13",
     "nvd3": "~1.1.15-beta",
-    "angularjs-nvd3-directives": "~0.0.5-beta"
+    "angularjs-nvd3-directives": "~0.0.5-beta",
+    "angular-pines-notify": "~0.0.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

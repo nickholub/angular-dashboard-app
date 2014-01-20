@@ -4,6 +4,9 @@ config.port = process.env.PORT || 3000;
 
 // client settings (passed to the browser)
 config.settings = {};
-config.settings.webSocketURL = 'ws://localhost/sockjs/websocket';
+var settings = config.settings;
+settings.webSocketURL = 'ws://localhost:3000/sockjs/websocket';
+settings.randomValueTopic = 'randomValue';
+settings.topNTopic = 'demos.twitter.topURLs';
 
 module.exports = config;

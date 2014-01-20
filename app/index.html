@@ -22,6 +22,8 @@
 
     <div class="container-full" ng-view=""></div>
 
+        <script src="settings.js"></script>
+
         <!-- build:js scripts/modules.js -->
         <script src="bower_components/jquery/jquery.js"></script>
         <script src="bower_components/underscore/underscore.js"></script>
@@ -38,11 +40,14 @@
         <script src="bower_components/nvd3/nv.d3.js"></script>
         <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
         <script src="bower_components/angular-ui-dashboard/dist/angular-ui-dashboard.js"></script>
+        <script src="bower_components/pines-notify/jquery.pnotify.js"></script>
+        <script src="bower_components/angular-pines-notify/src/pnotify.js"></script>
         <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/services/service.js"></script>
+        <script src="scripts/services/websocket.js"></script>
         <script src="scripts/widgets/time/time.js"></script>
         <script src="scripts/widgets/random/random.js"></script>
         <script src="scripts/widgets/scopeWatch/scopeWatch.js"></script>
@@ -52,6 +57,7 @@
         <script src="scripts/widgets/lineChart/lineChart.js"></script>
         <script src="scripts/widgets/pieChart/pieChart.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/serverdata.js"></script>
         <!-- endbuild -->
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>

@@ -24,6 +24,7 @@ module.exports = function(config) {
       'app/bower_components/angular-ui-dashboard/src/angular-ui-dashboard.js',
       'app/bower_components/ng-grid/ng-grid-2.0.7.debug.js',
       'app/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
+      'app/bower_components/angular-pines-notify/src/pnotify.js',
       'app/scripts/*.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
