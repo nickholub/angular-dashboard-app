@@ -1,7 +1,10 @@
 {
   "name": "angular-dashboard",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "~3.4.8",
+    "sockjs": "~0.3.8"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
