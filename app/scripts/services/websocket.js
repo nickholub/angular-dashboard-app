@@ -94,7 +94,7 @@ angular.module('app.websocket', ['ui.notify'])
           unsubscribe: function (topic, callback) {
             if (topicMap.hasOwnProperty(topic)) {
               var callbacks = topicMap[topic];
-              callbacks.remove(callback);
+              callbacks.remove(callback); //TODO remove topic from topicMap if callbacks is empty
             }
           }
         };
