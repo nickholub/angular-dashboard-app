@@ -17,11 +17,7 @@ angular.module('app')
       },
       {
         name: 'topics',
-        templateUrl: 'template/topics.html',
-        style: {
-          width: '33%',
-          height: '200px'
-        }
+        templateUrl: 'template/topics.html'
       }
     ];
 
@@ -48,10 +44,30 @@ angular.module('app')
       $scope.serverTopTen = list;
       $scope.$apply();
     }, $scope);
-
+  })
+  .controller('TopicCtrl', function ($scope, webSocket) {
     webSocket.subscribe('_latestTopics', function (message) {
       $scope.topics = message;
+      if (message.length) {
+        $scope.topic = message[0];
+      }
       $scope.$apply();
     }, $scope);
     webSocket.send({ type: 'getLatestTopics' });
+
+    var callback = function (message) {
+      $scope.topicData = JSON.stringify(message, null, ' ');
+      $scope.$apply();
+    };
+
+    $scope.$watch('topic', function (newTopic, oldTopic) {
+      if (oldTopic && callback) {
+        webSocket.unsubscribe(oldTopic, callback);
+      }
+
+      if (newTopic) {
+        $scope.topicData = 'Loading...';
+        webSocket.subscribe(newTopic, callback, $scope);
+      }
+    });
   });

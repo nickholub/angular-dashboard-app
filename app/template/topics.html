@@ -1,3 +1,4 @@
+<div style="overflow: hidden;" ng-controller="TopicCtrl">
 <p>
     Topics:
     <select ng-model="topic" ng-options="topic for topic in topics" style="min-width: 200px;">
@@ -6,3 +7,7 @@
 <p>
     Selected Topic: {{topic}}
 </p>
+<div style="height: 300px;">
+<pre style="overflow: auto;height: 100%;">{{topicData}}</pre>
+</div>
+</div>
