@@ -91,6 +91,10 @@ angular.module('app')
         style: {
           width: '50%'
         }
+      },
+      {
+        name: 'URLtemplate',
+        templateUrl: 'template/percentage.html'
       }
     ];
 
