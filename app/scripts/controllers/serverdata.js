@@ -28,9 +28,12 @@ angular.module('app')
         templateUrl: 'template/topics.html'
       },
       {
-        name: 'wt-scope-watch',
+        name: 'wt-gauge',
         attrs: {
-          value: 'serverValue'
+          value: 'chartValue'
+        },
+        style: {
+          width: '250px'
         }
       },
       {
@@ -91,6 +94,12 @@ angular.module('app')
 
     chartData('app.visualdata.chartValue', 'chart');
     chartData('app.visualdata.chartValue2', 'chart2');
+
+    $scope.chartValue = 0;
+    webSocket.subscribe('app.visualdata.chartValue2', function (value) {
+      $scope.chartValue = value;
+      $scope.$apply();
+    });
   })
   .controller('TopicCtrl', function ($scope, webSocket) {
     webSocket.subscribe('_latestTopics', function (message) {
