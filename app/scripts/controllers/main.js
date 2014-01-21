@@ -129,9 +129,8 @@ angular.module('app')
       $scope.percentage = ($scope.percentage + 10) % 100;
     }, 1000);
 
-    var max = 30;
-
 // line chart
+    var max = 30;
     var data = [];
     var chartValue = 50;
 

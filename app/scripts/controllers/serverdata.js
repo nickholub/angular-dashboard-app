@@ -4,6 +4,30 @@ angular.module('app')
   .controller('ServerDataCtrl', function ($scope, webSocket, settings) {
     var widgetDefinitions = [
       {
+        name: 'chart1',
+        directive: 'wt-line-chart',
+        attrs: {
+          chart: 'chart'
+        },
+        style: {
+          width: '50%'
+        }
+      },
+      {
+        name: 'chart2',
+        directive: 'wt-line-chart',
+        attrs: {
+          chart: 'chart2'
+        },
+        style: {
+          width: '50%'
+        }
+      },
+      {
+        name: 'topics',
+        templateUrl: 'template/topics.html'
+      },
+      {
         name: 'wt-scope-watch',
         attrs: {
           value: 'serverValue'
@@ -14,10 +38,6 @@ angular.module('app')
         attrs: {
           data: 'serverTopTen'
         }
-      },
-      {
-        name: 'topics',
-        templateUrl: 'template/topics.html'
       }
     ];
 
@@ -37,19 +57,51 @@ angular.module('app')
 
     webSocket.subscribe(settings.topNTopic, function (message) {
       var list = [];
-      _.each(message, function(value, key) {
-        list.push( { name: key, value: parseInt(value, 10) } );
+      _.each(message, function (value, key) {
+        list.push({ name: key, value: parseInt(value, 10) });
       }, $scope);
 
       $scope.serverTopTen = list;
       $scope.$apply();
     }, $scope);
+
+    // line chart
+    function chartData(topic, propertyName) {
+      var max = 30;
+      var data = [];
+      webSocket.subscribe(topic, function (value) {
+        var now = Date.now();
+        data.push({
+          timestamp: now,
+          value: value
+        });
+
+        if (data.length > 100) { //TODO
+          data.shift();
+        }
+
+        $scope[propertyName] = {
+          data: data,
+          max: max
+        };
+
+        $scope.$apply();
+      }, $scope);
+    }
+
+    chartData('app.visualdata.chartValue', 'chart');
+    chartData('app.visualdata.chartValue2', 'chart2');
   })
   .controller('TopicCtrl', function ($scope, webSocket) {
     webSocket.subscribe('_latestTopics', function (message) {
-      $scope.topics = message;
+      var list = _.reject(message, function (topic) {
+        return topic.indexOf('applications.') >= 0;
+      });
+      $scope.topics = _.sortBy(list, function (topic) {
+        return topic;
+      });
       if (message.length) {
-        $scope.topic = message[0];
+        $scope.topic = $scope.topics[0];
       }
       $scope.$apply();
     }, $scope);

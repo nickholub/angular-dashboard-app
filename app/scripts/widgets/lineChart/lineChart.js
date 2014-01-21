@@ -43,7 +43,7 @@ angular.module('ui.dashboard.widgets')
           var chartOptions = {
             legend: 'none',
             vAxis: { minValue: 0, maxValue: 100 },
-            hAxis: { viewWindow: { min: min, max: max }},
+            hAxis: { viewWindow: { min: min, max: max }}
             //chartArea: { top: 20, left: 30, height: 240 }
           };
 
