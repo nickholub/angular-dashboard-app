@@ -51,7 +51,14 @@ angular.module('ui.dashboard.widgets')
         }
 
         scope.$watch('chart', function (chart) {
-          if (chart && chart.data && chart.max) {
+          if (!chart) {
+            chart = {
+              data: [],
+              max: 30
+            };
+          }
+
+          if (chart.data && chart.max) {
             draw(chart);
           }
         });
