@@ -10,7 +10,6 @@ function ValueModel(name, $scope, webSocket) {
 
   this.update = function (newTopic) {
     if (this.topic) {
-      console.log('__uns');
       webSocket.unsubscribe(this.topic, callback);
     }
     this.topic = newTopic;
@@ -46,7 +45,6 @@ function ChartModel(name, $scope, webSocket) {
 
   this.update = function (newTopic) {
     if (this.topic) {
-      console.log('__uns');
       webSocket.unsubscribe(this.topic, callback);
     }
 
@@ -57,15 +55,66 @@ function ChartModel(name, $scope, webSocket) {
   };
 }
 
+function DataSource(model, topic) {
+  this.model = model;
+  this.topic = topic;
+
+  if (topic) {
+    this.model.update(topic);
+  }
+
+  this.update = function (topic) {
+    this.topic = topic;
+    this.model.update(topic);
+  };
+}
+
 angular.module('app')
   .controller('ServerDataCtrl', function ($scope, webSocket, settings) {
+    $scope.value1 = 'not defined';
+    $scope.value2 = 'not defined';
+
     var widgetDefinitions = [
+      {
+        name: 'value1',
+        directive: 'wt-scope-watch',
+        attrs: {
+          value: 'value1'
+        },
+        dataSource: new DataSource(
+          new ValueModel('value1', $scope, webSocket),
+          'app.visualdata.chartValue'
+        ),
+        optionsTemplateUrl: 'template/widgetOptions.html',
+        style: {
+          width: '40%'
+        }
+      },
+      {
+        name: 'value2',
+        directive: 'wt-scope-watch',
+        attrs: {
+          value: 'value2'
+        },
+        dataSource: new DataSource(
+          new ValueModel('value2', $scope, webSocket)
+        ),
+        optionsTemplateUrl: 'template/widgetOptions.html',
+        style: {
+          width: '40%'
+        }
+      },
       {
         name: 'chart1',
         directive: 'wt-line-chart',
         attrs: {
           chart: 'chart'
         },
+        dataSource: new DataSource(
+          new ChartModel('chart', $scope, webSocket),
+          'app.visualdata.chartValue'
+        ),
+        optionsTemplateUrl: 'template/widgetOptions.html',
         style: {
           width: '50%'
         }
@@ -126,6 +175,7 @@ angular.module('app')
       $scope.$apply();
     }, $scope);
 
+    $scope.chartValue = 0;
     var valueModel = new ValueModel('chartValue', $scope, webSocket);
 
     var chartModel = new ChartModel('chart', $scope, webSocket);
@@ -134,7 +184,6 @@ angular.module('app')
     chartModel2.update('app.visualdata.chartValue2');
 
     $scope.$on('topic', function (event, topic) {
-      console.log(topic);
       valueModel.update(topic);
       chartModel.update(topic);
     });
@@ -167,7 +216,33 @@ angular.module('app')
       if (newTopic) {
         $scope.topicData = 'Loading...';
         webSocket.subscribe(newTopic, callback, $scope);
-        $scope.$emit('topic', newTopic);
+        //$scope.$emit('topic', newTopic); //TODO
+        //$rootScope.$broadcast('topic', newTopic);
       }
     });
+  })
+  .controller('WidgetOptionsCtrl', function ($scope, webSocket) {
+    var widget = $scope.widget;
+    if (widget && widget.dataSource) {
+      $scope.topic = widget.dataSource.topic;
+
+      // load available topics
+      webSocket.subscribe('_latestTopics', function (message) {
+        var list = _.reject(message, function (topic) {
+          return topic.indexOf('applications.') >= 0;
+        });
+        $scope.topics = _.sortBy(list, function (topic) {
+          return topic;
+        });
+
+        $scope.$apply();
+      }, $scope);
+      webSocket.send({ type: 'getLatestTopics' });
+
+      $scope.$watch('topic', function (newTopic) {
+        if (newTopic) {
+          widget.dataSource.update(newTopic);
+        }
+      });
+    }
   });
