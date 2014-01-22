@@ -1,5 +1,62 @@
 'use strict';
 
+function ValueModel(name, $scope, webSocket) {
+  this.topic = null;
+
+  var callback = function (message) {
+    $scope[name] = message;
+    $scope.$apply();
+  };
+
+  this.update = function (newTopic) {
+    if (this.topic) {
+      console.log('__uns');
+      webSocket.unsubscribe(this.topic, callback);
+    }
+    this.topic = newTopic;
+    webSocket.subscribe(this.topic, callback, $scope);
+  };
+}
+
+//TODO
+function ChartModel(name, $scope, webSocket) {
+  this.topic = null;
+
+  var max = 30;
+  var data = [];
+
+  var callback = function (value) {
+    var now = Date.now();
+    data.push({
+      timestamp: now,
+      value: value
+    });
+
+    if (data.length > 100) { //TODO
+      data.shift();
+    }
+
+    $scope[name] = {
+      data: data,
+      max: max
+    };
+
+    $scope.$apply();
+  };
+
+  this.update = function (newTopic) {
+    if (this.topic) {
+      console.log('__uns');
+      webSocket.unsubscribe(this.topic, callback);
+    }
+
+    this.topic = newTopic;
+    data = [];
+
+    webSocket.subscribe(this.topic, callback, $scope);
+  };
+}
+
 angular.module('app')
   .controller('ServerDataCtrl', function ($scope, webSocket, settings) {
     var widgetDefinitions = [
@@ -52,6 +109,7 @@ angular.module('app')
       defaultWidgets: defaultWidgets
     };
 
+    //TODO
     $scope.serverValue = 0;
     webSocket.subscribe(settings.randomValueTopic, function (message) {
       $scope.serverValue = message.value;
@@ -68,37 +126,17 @@ angular.module('app')
       $scope.$apply();
     }, $scope);
 
-    // line chart
-    function chartData(topic, propertyName) {
-      var max = 30;
-      var data = [];
-      webSocket.subscribe(topic, function (value) {
-        var now = Date.now();
-        data.push({
-          timestamp: now,
-          value: value
-        });
+    var valueModel = new ValueModel('chartValue', $scope, webSocket);
 
-        if (data.length > 100) { //TODO
-          data.shift();
-        }
+    var chartModel = new ChartModel('chart', $scope, webSocket);
 
-        $scope[propertyName] = {
-          data: data,
-          max: max
-        };
+    var chartModel2 = new ChartModel('chart2', $scope, webSocket);
+    chartModel2.update('app.visualdata.chartValue2');
 
-        $scope.$apply();
-      }, $scope);
-    }
-
-    chartData('app.visualdata.chartValue', 'chart');
-    chartData('app.visualdata.chartValue2', 'chart2');
-
-    $scope.chartValue = 0;
-    webSocket.subscribe('app.visualdata.chartValue2', function (value) {
-      $scope.chartValue = value;
-      $scope.$apply();
+    $scope.$on('topic', function (event, topic) {
+      console.log(topic);
+      valueModel.update(topic);
+      chartModel.update(topic);
     });
   })
   .controller('TopicCtrl', function ($scope, webSocket) {
@@ -129,6 +167,7 @@ angular.module('app')
       if (newTopic) {
         $scope.topicData = 'Loading...';
         webSocket.subscribe(newTopic, callback, $scope);
+        $scope.$emit('topic', newTopic);
       }
     });
   });
