@@ -26,6 +26,7 @@ function ChartModel(name, $scope, webSocket) {
 
   var callback = function (value) {
     var now = Date.now();
+
     data.push({
       timestamp: now,
       value: value
@@ -136,8 +137,13 @@ angular.module('app')
       {
         name: 'wt-gauge',
         attrs: {
-          value: 'chartValue'
+          value: 'gaugeValue'
         },
+        dataSource: new DataSource(
+          new ValueModel('gaugeValue', $scope, webSocket),
+          'app.visualdata.chartValue'
+        ),
+        optionsTemplateUrl: 'template/widgetOptions.html',
         style: {
           width: '250px'
         }
