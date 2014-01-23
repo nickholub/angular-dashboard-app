@@ -86,7 +86,6 @@ angular.module('app')
           new ValueModel('value1', $scope, webSocket),
           'app.visualdata.chartValue'
         ),
-        optionsTemplateUrl: 'template/widgetOptions.html',
         style: {
           width: '40%'
         }
@@ -100,7 +99,6 @@ angular.module('app')
         dataSource: new DataSource(
           new ValueModel('value2', $scope, webSocket)
         ),
-        optionsTemplateUrl: 'template/widgetOptions.html',
         style: {
           width: '40%'
         }
@@ -115,7 +113,6 @@ angular.module('app')
           new ChartModel('chart', $scope, webSocket),
           'app.visualdata.chartValue'
         ),
-        optionsTemplateUrl: 'template/widgetOptions.html',
         style: {
           width: '50%'
         }
@@ -143,7 +140,6 @@ angular.module('app')
           new ValueModel('gaugeValue', $scope, webSocket),
           'app.visualdata.chartValue'
         ),
-        optionsTemplateUrl: 'template/widgetOptions.html',
         style: {
           width: '250px'
         }
@@ -161,7 +157,8 @@ angular.module('app')
     $scope.dashboardOptions = {
       widgetButtons: true,
       widgetDefinitions: widgetDefinitions,
-      defaultWidgets: defaultWidgets
+      defaultWidgets: defaultWidgets,
+      optionsTemplateUrl: 'template/widgetOptions.html'
     };
 
     //TODO
