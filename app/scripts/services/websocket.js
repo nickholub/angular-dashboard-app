@@ -19,6 +19,15 @@ angular.module('app.websocket', ['ui.notify'])
         socket.onopen = function () {
           deferred.resolve();
           $rootScope.$apply();
+
+          notificationService.notify({
+            title: 'WebSocket',
+            text: 'WebSocket connection established.',
+            type: 'success',
+            delay: 2000,
+            icon: false,
+            history: false
+          });
         };
 
         var webSocketError = false;
