@@ -21,7 +21,8 @@
     "d3": "~3.3.13",
     "nvd3": "~1.1.15-beta",
     "angularjs-nvd3-directives": "~0.0.5-beta",
-    "angular-pines-notify": "~0.0.3"
+    "angular-pines-notify": "~0.0.3",
+    "pnotify": "git@github.com:sciactive/pnotify.git#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
