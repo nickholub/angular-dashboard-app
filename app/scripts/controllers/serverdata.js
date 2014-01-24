@@ -19,7 +19,7 @@ angular.module('app')
         name: 'value2',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
-        dataTypes: ['percentage', 'simple'],
+        //dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.piValue_{type:\'simple\'}' //TODO
@@ -140,6 +140,10 @@ angular.module('app')
     }, $scope);
   })
   .controller('TopicCtrl', function ($scope, webSocket) {
+    $scope.selectTopic = function (topic) {
+      $scope.topic = topic;
+    };
+
     webSocket.subscribe('_latestTopics', function (message) {
       var list = _.reject(message, function (topic) {
         return topic.indexOf('applications.') >= 0;
@@ -215,6 +219,10 @@ angular.module('app')
           widget.dataSource.update(newTopic);
         }
       });
+
+      $scope.selectTopic = function (topic) {
+        $scope.topic = topic;
+      };
     }
   })
 ;
