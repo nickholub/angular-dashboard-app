@@ -196,6 +196,11 @@ angular.module('app')
         name: 'wt-top-n',
         attrs: {
           data: 'serverTopTen'
+        },
+        dataAttrName: 'data',
+        dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.topn_{type:\'topN\',n:10}' //TODO
         }
       }
     ];
