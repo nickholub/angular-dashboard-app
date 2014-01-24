@@ -71,7 +71,77 @@ function DataSource(model, topic) {
 }
 
 angular.module('app')
-  .controller('ServerDataCtrl', function ($scope, webSocket, settings) {
+  .factory('WebSocketDataSource', function (WidgetDataSource, webSocket) {
+    function WebSocketDataSource() {
+      console.log('WebSocketDataSource constructor');
+    }
+    WebSocketDataSource.prototype = Object.create(WidgetDataSource.prototype);
+
+    WebSocketDataSource.prototype.init = function () {
+      this.topic = null;
+      this.callback = null;
+      this.update('app.visualdata.piValue');
+    };
+
+    WebSocketDataSource.prototype.update = function (newTopic) {
+      console.log('_update');
+      var that = this;
+
+      if (this.topic && this.callback) {
+        webSocket.unsubscribe(this.topic, this.callback);
+      }
+
+      this.callback = function (message) {
+        //console.log('_callback ' + that.topic);
+        that.updateScope(message);
+        that.widgetScope.$apply();
+      };
+
+      this.topic = newTopic;
+      webSocket.subscribe(this.topic, this.callback, this.widgetScope);
+    };
+
+    WebSocketDataSource.prototype.destroy = function () {
+      WidgetDataSource.prototype.destroy.call(this);
+
+      console.log('_WebSocketDataSource destroy');
+
+      if (this.topic && this.callback) {
+        webSocket.unsubscribe(this.topic, this.callback);
+      }
+    };
+
+    return WebSocketDataSource;
+  })
+  .factory('RandomValueDataSource', function (WidgetDataSource, $interval) {
+    function RandomValueDataSource() {
+      console.log('RandomValueDataSource constructor');
+    }
+    RandomValueDataSource.prototype = Object.create(WidgetDataSource.prototype);
+
+    RandomValueDataSource.prototype.init = function () {
+      var base = Math.floor(Math.random() * 10) * 10;
+
+      this.updateScope(base);
+
+      var that = this;
+
+      this.intervalPromise = $interval(function () {
+        var random = base + Math.random();
+        //console.log(random);
+        that.updateScope(random);
+      }, 500);
+    };
+
+    RandomValueDataSource.prototype.destroy = function () {
+      WidgetDataSource.prototype.destroy.call(this);
+      console.log('_RandomValueDataSource destroy');
+      $interval.cancel(this.intervalPromise);
+    };
+
+    return RandomValueDataSource;
+  })
+  .controller('ServerDataCtrl', function ($scope, webSocket, settings, RandomValueDataSource, WebSocketDataSource) {
     $scope.value1 = 'not defined';
     $scope.value2 = 'not defined';
 
@@ -79,13 +149,10 @@ angular.module('app')
       {
         name: 'value1',
         directive: 'wt-scope-watch',
-        attrs: {
-          value: 'value1'
-        },
-        dataSource: new DataSource(
-          new ValueModel('value1', $scope, webSocket),
-          'app.visualdata.chartValue'
-        ),
+        dataAttrName: 'value',
+        //ds: new WidgetDataSource(),
+        //ds: new RandomValueDataSource(),
+        dataSourceType: RandomValueDataSource,
         style: {
           width: '40%'
         }
@@ -93,12 +160,8 @@ angular.module('app')
       {
         name: 'value2',
         directive: 'wt-scope-watch',
-        attrs: {
-          value: 'value2'
-        },
-        dataSource: new DataSource(
-          new ValueModel('value2', $scope, webSocket)
-        ),
+        dataAttrName: 'value',
+        dataSourceType: WebSocketDataSource,
         style: {
           width: '40%'
         }
@@ -238,12 +301,14 @@ angular.module('app')
           return topic;
         });
 
+        //TODO unsubscribe webSocket.get(request).then(...);
+
         $scope.$apply();
       }, $scope);
       webSocket.send({ type: 'getLatestTopics' });
 
       $scope.$watch('topic', function (newTopic) {
-        if (newTopic) {
+        if (newTopic && (newTopic !== widget.dataSource.topic)) {
           widget.dataSource.update(newTopic);
         }
       });
