@@ -19,9 +19,10 @@ angular.module('app')
         name: 'value2',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
+        dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.piValue'
+          defaultTopic: 'app.visualdata.piValue_{type:\'simple\'}' //TODO
         },
         style: {
           width: '30%'
@@ -31,9 +32,10 @@ angular.module('app')
         name: 'value3',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
+        dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.chartValue'
+          defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}'
         },
         style: {
           width: '30%'
@@ -43,6 +45,7 @@ angular.module('app')
         name: 'chart1',
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
+        dataTypes: ['timeseries'],
         dataSourceType: TimeSeriesDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.chartValue_{type:\'timeseries\',minValue:0,maxValue:100}' //TODO
@@ -55,6 +58,7 @@ angular.module('app')
         name: 'chart2',
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
+        dataTypes: ['timeseries'],
         dataSourceType: TimeSeriesDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.chartValue2_{type:\'timeseries\',minValue:0,maxValue:100}' //TODO
@@ -172,17 +176,35 @@ angular.module('app')
 
       // load available topics
       webSocket.subscribe('_latestTopics', function (message) {
-        var list = _.reject(message, function (topic) {
-          return topic.indexOf('applications.') >= 0;
-        });
-        $scope.topics = _.sortBy(list, function (topic) {
-          return topic;
-        });
+          var list = _.reject(message, function (topic) {
+            return topic.indexOf('applications.') >= 0;
+          });
 
-        //TODO unsubscribe webSocket.get(request).then(...);
+          if (widget.dataTypes) {
+            var regExp = new RegExp(widget.dataTypes.join('|'));
+            list = _.reject(list, function (topic) {
+              var schemaInd = topic.indexOf('_');
 
-        $scope.$apply();
-      }, $scope);
+              if (schemaInd > 0) {
+                var schemaStr = topic.substr(schemaInd + 1);
+
+                console.log(schemaStr);
+                return !regExp.test(schemaStr);
+              } else {
+                return true;
+              }
+            });
+          }
+
+          console.log(widget.dataTypes);
+          $scope.topics = _.sortBy(list, function (topic) {
+            return topic;
+          });
+
+          //TODO unsubscribe webSocket.get(request).then(...);
+
+          $scope.$apply();
+        }, $scope);
       webSocket.send({ type: 'getLatestTopics' });
 
       $scope.$watch('topic', function (newTopic) {
@@ -191,4 +213,5 @@ angular.module('app')
         }
       });
     }
-  });
+  })
+;
