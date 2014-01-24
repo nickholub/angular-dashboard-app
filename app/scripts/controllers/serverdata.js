@@ -178,6 +178,21 @@ angular.module('app')
         }
       },
       {
+        name: 'progressbar',
+        attrs: {
+          class: 'progress-striped',
+          type: 'success'
+        },
+        dataAttrName: 'value',
+        dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}' //TODO
+        },
+        style: {
+          width: '30%'
+        }
+      },
+      {
         name: 'wt-top-n',
         attrs: {
           data: 'serverTopTen'
