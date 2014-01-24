@@ -64,8 +64,15 @@ angular.module('app')
         }
       },
       {
-        name: 'topics',
-        templateUrl: 'template/topics.html'
+        name: 'wt-top-n',
+        attrs: {
+          data: 'serverTopTen'
+        },
+        dataAttrName: 'data',
+        dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.topn_{type:\'topN\',n:10}' //TODO
+        }
       },
       {
         name: 'wt-gauge',
@@ -94,15 +101,8 @@ angular.module('app')
         }
       },
       {
-        name: 'wt-top-n',
-        attrs: {
-          data: 'serverTopTen'
-        },
-        dataAttrName: 'data',
-        dataSourceType: WebSocketDataSource,
-        dataSourceOptions: {
-          defaultTopic: 'app.visualdata.topn_{type:\'topN\',n:10}' //TODO
-        }
+        name: 'topics',
+        templateUrl: 'template/topics.html'
       }
     ];
 
