@@ -73,6 +73,7 @@ angular.module('app')
           data: 'serverTopTen'
         },
         dataAttrName: 'data',
+        dataTypes: ['topN'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.topn_{type:\'topN\',n:10}' //TODO
@@ -81,6 +82,7 @@ angular.module('app')
       {
         name: 'wt-gauge',
         dataAttrName: 'value',
+        dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}' //TODO
@@ -96,6 +98,7 @@ angular.module('app')
           type: 'success'
         },
         dataAttrName: 'value',
+        dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}' //TODO
