@@ -71,20 +71,55 @@ function DataSource(model, topic) {
 }
 
 angular.module('app')
+  .factory('TimeSeriesDataSource', function (WebSocketDataSource) {
+    function TimeSeriesDataSource() {
+    }
+    TimeSeriesDataSource.prototype = Object.create(WebSocketDataSource.prototype);
+
+    TimeSeriesDataSource.prototype.init = function () {
+      WebSocketDataSource.prototype.init.call(this);
+    };
+
+    TimeSeriesDataSource.prototype.update = function (newTopic) {
+      WebSocketDataSource.prototype.update.call(this, newTopic);
+      this.items = [];
+    };
+
+    TimeSeriesDataSource.prototype.updateScope = function (value) {
+      this.items.push({
+        timestamp: parseInt(value[0].timestamp, 10), //TODO
+        value: parseInt(value[0].value, 10) //TODO
+      });
+
+      if (this.items > 100) { //TODO
+        this.items.shift();
+      }
+
+      var chart = {
+        data: this.items,
+        max: 30
+      };
+
+      WebSocketDataSource.prototype.updateScope.call(this, chart);
+      this.data = [];
+    };
+
+    return TimeSeriesDataSource;
+  })
   .factory('WebSocketDataSource', function (WidgetDataSource, webSocket) {
     function WebSocketDataSource() {
-      console.log('WebSocketDataSource constructor');
     }
     WebSocketDataSource.prototype = Object.create(WidgetDataSource.prototype);
 
     WebSocketDataSource.prototype.init = function () {
       this.topic = null;
       this.callback = null;
-      this.update('app.visualdata.piValue');
+      if (this.dataSourceOptions && this.dataSourceOptions.defaultTopic) {
+        this.update(this.dataSourceOptions.defaultTopic);
+      }
     };
 
     WebSocketDataSource.prototype.update = function (newTopic) {
-      console.log('_update');
       var that = this;
 
       if (this.topic && this.callback) {
@@ -92,7 +127,6 @@ angular.module('app')
       }
 
       this.callback = function (message) {
-        //console.log('_callback ' + that.topic);
         that.updateScope(message);
         that.widgetScope.$apply();
       };
@@ -104,8 +138,6 @@ angular.module('app')
     WebSocketDataSource.prototype.destroy = function () {
       WidgetDataSource.prototype.destroy.call(this);
 
-      console.log('_WebSocketDataSource destroy');
-
       if (this.topic && this.callback) {
         webSocket.unsubscribe(this.topic, this.callback);
       }
@@ -115,7 +147,6 @@ angular.module('app')
   })
   .factory('RandomValueDataSource', function (WidgetDataSource, $interval) {
     function RandomValueDataSource() {
-      console.log('RandomValueDataSource constructor');
     }
     RandomValueDataSource.prototype = Object.create(WidgetDataSource.prototype);
 
@@ -128,20 +159,18 @@ angular.module('app')
 
       this.intervalPromise = $interval(function () {
         var random = base + Math.random();
-        //console.log(random);
         that.updateScope(random);
       }, 500);
     };
 
     RandomValueDataSource.prototype.destroy = function () {
       WidgetDataSource.prototype.destroy.call(this);
-      console.log('_RandomValueDataSource destroy');
       $interval.cancel(this.intervalPromise);
     };
 
     return RandomValueDataSource;
   })
-  .controller('ServerDataCtrl', function ($scope, webSocket, settings, RandomValueDataSource, WebSocketDataSource) {
+  .controller('ServerDataCtrl', function ($scope, webSocket, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource) {
     $scope.value1 = 'not defined';
     $scope.value2 = 'not defined';
 
@@ -150,11 +179,9 @@ angular.module('app')
         name: 'value1',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
-        //ds: new WidgetDataSource(),
-        //ds: new RandomValueDataSource(),
         dataSourceType: RandomValueDataSource,
         style: {
-          width: '40%'
+          width: '30%'
         }
       },
       {
@@ -162,20 +189,33 @@ angular.module('app')
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
         dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.piValue'
+        },
         style: {
-          width: '40%'
+          width: '30%'
+        }
+      },
+      {
+        name: 'value3',
+        directive: 'wt-scope-watch',
+        dataAttrName: 'value',
+        dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.chartValue'
+        },
+        style: {
+          width: '30%'
         }
       },
       {
         name: 'chart1',
         directive: 'wt-line-chart',
-        attrs: {
-          chart: 'chart'
+        dataAttrName: 'chart',
+        dataSourceType: TimeSeriesDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.chartValue_{type:\'timeseries\',minValue:0,maxValue:100}' //TODO
         },
-        dataSource: new DataSource(
-          new ChartModel('chart', $scope, webSocket),
-          'app.visualdata.chartValue'
-        ),
         style: {
           width: '50%'
         }
@@ -183,8 +223,10 @@ angular.module('app')
       {
         name: 'chart2',
         directive: 'wt-line-chart',
-        attrs: {
-          chart: 'chart2'
+        dataAttrName: 'chart',
+        dataSourceType: TimeSeriesDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.chartValue2_{type:\'timeseries\',minValue:0,maxValue:100}' //TODO
         },
         style: {
           width: '50%'
