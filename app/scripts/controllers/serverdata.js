@@ -22,7 +22,7 @@ angular.module('app')
         //dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.piValue_{type:\'simple\'}' //TODO
+          defaultTopic: 'app.visualdata.piValue_{"type":"simple"}' //TODO
         },
         style: {
           width: '30%'
@@ -35,7 +35,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}'
+          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
         },
         style: {
           width: '30%'
@@ -48,7 +48,7 @@ angular.module('app')
         dataTypes: ['timeseries'],
         dataSourceType: TimeSeriesDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.chartValue_{type:\'timeseries\',minValue:0,maxValue:100}' //TODO
+          defaultTopic: 'app.visualdata.chartValue_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
         },
         style: {
           width: '50%'
@@ -61,7 +61,7 @@ angular.module('app')
         dataTypes: ['timeseries'],
         dataSourceType: TimeSeriesDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.chartValue2_{type:\'timeseries\',minValue:0,maxValue:100}' //TODO
+          defaultTopic: 'app.visualdata.chartValue2_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
         },
         style: {
           width: '50%'
@@ -76,7 +76,7 @@ angular.module('app')
         dataTypes: ['topN'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.topn_{type:\'topN\',n:10}' //TODO
+          defaultTopic: 'app.visualdata.topn_{"type":"topN","n":10}' //TODO
         }
       },
       {
@@ -216,6 +216,7 @@ angular.module('app')
 
       $scope.$watch('topic', function (newTopic) {
         if (newTopic && (newTopic !== widget.dataSource.topic)) {
+          console.log(widget.dataSource);
           widget.dataSource.update(newTopic);
         }
       });
