@@ -19,7 +19,7 @@ angular.module('app')
         name: 'value2',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
-        //dataTypes: ['percentage', 'simple'],
+        dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.piValue_{"type":"simple"}' //TODO
@@ -85,7 +85,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}' //TODO
+          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
         },
         style: {
           width: '250px'
@@ -101,7 +101,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{type:\'percentage\'}' //TODO
+          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
         },
         style: {
           width: '30%'
