@@ -251,6 +251,7 @@ angular.module('app')
     };
 
     var widget = $scope.widget;
+
     if (widget && widget.dataSource) {
       // load available topics
       webSocket.subscribe('_latestTopics', function (message) {
@@ -283,6 +284,8 @@ angular.module('app')
         });
 
         if (widget.dataTypes) {
+          $scope.dataTypes = widget.dataTypes.join(', '); //TODO use filter instead
+
           topics = _.reject(topics, function (topic) {
             return !topic.schema || !_.contains(widget.dataTypes, topic.schema.type);
           });
