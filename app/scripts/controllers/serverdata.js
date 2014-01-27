@@ -10,6 +10,9 @@ angular.module('app')
         name: 'Value',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
+        attrs: {
+          'value-class': 'alert-info'
+        },
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
@@ -99,9 +102,6 @@ angular.module('app')
     var defaultWidgets = [
       copy('Value'),
       copy('Value', {
-        attrs: {
-          //'value-class': 'alert-info'
-        },
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
         }
