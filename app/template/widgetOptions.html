@@ -19,16 +19,16 @@
         <label class="col-sm-2 control-label">Topics</label>
 
         <div class="col-sm-10">
-            <div class="navbar-form" style="margin:0;padding:0;">
-            <select ng-model="topic" ng-options="topic.name for topic in topics" class="form-control"
-                    style="min-width: 200px;">
-            </select>
-            <button class="btn btn-default navbar-btn" ng-click="prevTopic();">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </button>
-            <button class="btn btn-default navbar-btn" ng-click="nextTopic();">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </button>
+            <div class="form-inline">
+                <select ng-model="topic" ng-options="topic.name for topic in topics" class="form-control"
+                        style="min-width: 200px;">
+                </select>
+                <button class="btn btn-default navbar-btn" ng-click="prevTopic();">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+                <button class="btn btn-default navbar-btn" ng-click="nextTopic();">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
             </div>
         </div>
     </div>
