@@ -177,7 +177,6 @@ angular.module('app')
 
     $scope.topicDefs = [];
 
-
     $scope.mySelections = [];
 
     $scope.gridOptions = {
@@ -239,47 +238,73 @@ angular.module('app')
   .controller('WidgetOptionsCtrl', function ($scope, webSocket, settings) {
     $scope.webSocketURL = settings.webSocketURL; //TODO
 
+    $scope.prevTopic = function () {
+      var index = $scope.topics.indexOf($scope.topic);
+      var prev = ($scope.topics.length + index - 1) % $scope.topics.length;
+      $scope.topic = $scope.topics[prev];
+    };
+
+    $scope.nextTopic = function () {
+      var index = $scope.topics.indexOf($scope.topic);
+      var next = (index + 1) % $scope.topics.length;
+      $scope.topic = $scope.topics[next];
+    };
+
     var widget = $scope.widget;
     if (widget && widget.dataSource) {
-      $scope.topic = widget.dataSource.topic;
-
       // load available topics
       webSocket.subscribe('_latestTopics', function (message) {
-          var list = _.reject(message, function (topic) {
-            return topic.indexOf('applications.') >= 0;
-          });
+        var list = _.reject(message, function (topic) {
+          return topic.indexOf('applications.') >= 0;
+        });
 
-          if (widget.dataTypes) {
-            var regExp = new RegExp(widget.dataTypes.join('|'));
-            list = _.reject(list, function (topic) {
-              var schemaInd = topic.indexOf('_');
+        var topics = _.map(list, function (topic) {
+          var schemaInd = topic.indexOf('_');
+          var name = topic;
+          var type = null;
+          var schema = {};
 
-              if (schemaInd > 0) {
-                var schemaStr = topic.substr(schemaInd + 1);
-
-                console.log(schemaStr);
-                return !regExp.test(schemaStr);
-              } else {
-                return true;
-              }
-            });
+          if (schemaInd > 0) {
+            name = topic.substr(0, schemaInd);
+            var schemaStr = topic.substr(schemaInd + 1);
+            schema = JSON.parse(schemaStr);
+            type = schema.type;
+          } else {
+            topic = topic;
+            name = topic;
           }
 
-          console.log(widget.dataTypes);
-          $scope.topics = _.sortBy(list, function (topic) {
-            return topic;
+          return {
+            topic: topic,
+            name: name,
+            schema: schema,
+            type: type
+          };
+        });
+
+        if (widget.dataTypes) {
+          topics = _.reject(topics, function (topic) {
+            return !topic.schema || !_.contains(widget.dataTypes, topic.schema.type);
           });
+        }
 
-          //TODO unsubscribe webSocket.get(request).then(...);
+        topics = _.sortBy(topics, function (topic) {
+          return topic.name;
+        });
 
-          $scope.$apply();
-        }, $scope);
+        $scope.topics = topics;
+        $scope.topic = _.findWhere($scope.topics, {topic: widget.dataSource.topic});
+
+        //TODO unsubscribe webSocket.get(request).then(...);
+
+        $scope.$apply();
+      }, $scope);
       webSocket.send({ type: 'getLatestTopics' });
 
       $scope.$watch('topic', function (newTopic) {
-        if (newTopic && (newTopic !== widget.dataSource.topic)) {
+        if (newTopic && (newTopic.topic !== widget.dataSource.topic)) {
           console.log(widget.dataSource);
-          widget.dataSource.update(newTopic);
+          widget.dataSource.update(newTopic.topic);
         }
       });
 
