@@ -7,7 +7,7 @@ angular.module('app')
 
     var widgetDefinitions = [
       {
-        name: 'value1',
+        name: 'Value',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
@@ -20,23 +20,8 @@ angular.module('app')
         }
       },
       {
-        name: 'value2',
-        directive: 'wt-scope-watch',
-        attrs: {
-          'value-class': 'alert-info'
-        },
-        dataAttrName: 'value',
-        dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
-        dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
-        },
-        style: {
-          width: '30%'
-        }
-      },
-      {
-        name: 'progressbar',
+        name: 'Progressbar',
+        directive: 'progressbar',
         attrs: {
           class: 'progress-striped',
           type: 'success'
@@ -52,7 +37,7 @@ angular.module('app')
         }
       },
       {
-        name: 'chart1',
+        name: 'Line Chart',
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
         dataTypes: ['timeseries'],
@@ -65,20 +50,8 @@ angular.module('app')
         }
       },
       {
-        name: 'chart2',
-        directive: 'wt-line-chart',
-        dataAttrName: 'chart',
-        dataTypes: ['timeseries'],
-        dataSourceType: TimeSeriesDataSource,
-        dataSourceOptions: {
-          defaultTopic: 'app.visualdata.chartValue2_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
-        },
-        style: {
-          width: '50%'
-        }
-      },
-      {
-        name: 'wt-top-n',
+        name: 'TopN',
+        directive: 'wt-top-n',
         attrs: {
           data: 'serverTopTen'
         },
@@ -90,7 +63,8 @@ angular.module('app')
         }
       },
       {
-        name: 'wt-gauge',
+        name: 'Gauge',
+        directive: 'wt-gauge',
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
@@ -102,12 +76,49 @@ angular.module('app')
         }
       },
       {
-        name: 'topics',
+        name: 'Topics',
         templateUrl: 'template/topics.html'
       }
     ];
 
-    var defaultWidgets = _.clone(widgetDefinitions);
+    function find(name) {
+      return _.findWhere(widgetDefinitions, {name: name});
+    }
+
+    function copy(name, extend) {
+      var dest = angular.copy(find(name));
+
+      if (extend) {
+        angular.extend(dest, extend);
+      }
+
+      return dest;
+    }
+
+    //var defaultWidgets = _.clone(widgetDefinitions);
+    var defaultWidgets = [
+      copy('Value'),
+      copy('Value', {
+        attrs: {
+          //'value-class': 'alert-info'
+        },
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
+        }
+      }),
+      copy('Progressbar'),
+      copy('Line Chart'),
+      copy('Line Chart', {
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.chartValue2_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
+        }
+      }),
+      copy('TopN'),
+      copy('Gauge'),
+      copy('Topics')
+    ];
+
+    console.log(defaultWidgets);
 
     $scope.dashboardOptions = {
       widgetButtons: true,
