@@ -16,7 +16,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.piValue_{"type":"simple"}' //TODO
+          defaultTopic: settings.topic.visualdata.piValue
         }
       },
       {
@@ -30,7 +30,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
+          defaultTopic: settings.topic.visualdata.percentage
         }
       },
       {
@@ -40,7 +40,7 @@ angular.module('app')
         dataTypes: ['timeseries'],
         dataSourceType: TimeSeriesDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.chartValue_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
+          defaultTopic: settings.topic.visualdata.chartValue
         },
         style: {
           width: '50%'
@@ -56,7 +56,7 @@ angular.module('app')
         dataTypes: ['topN'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.topn_{"type":"topN","n":10}' //TODO
+          defaultTopic: settings.topic.visualdata.topn
         }
       },
       {
@@ -66,7 +66,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
+          defaultTopic: settings.topic.visualdata.percentage
         },
         style: {
           width: '250px'
@@ -82,7 +82,7 @@ angular.module('app')
         dataAttrName: 'value',
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.topn_{"type":"topN","n":10}' //TODO
+          defaultTopic: settings.topic.visualdata.topn
         }
       }
     ];
@@ -109,7 +109,7 @@ angular.module('app')
       copy('Value', {
         title: 'Value 2',
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
+          defaultTopic: settings.topic.visualdata.percentage
         }
       }),
       copy('Progressbar', {
@@ -121,7 +121,7 @@ angular.module('app')
       copy('Line Chart', {
         title: 'Line Chart 2',
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.chartValue2_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
+          defaultTopic: settings.topic.visualdata.chartValue2
         }
       }),
       copy('TopN', {
