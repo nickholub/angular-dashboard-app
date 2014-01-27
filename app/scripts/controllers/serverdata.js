@@ -101,15 +101,6 @@ angular.module('app')
       {
         name: 'topics',
         templateUrl: 'template/topics.html'
-      },
-      {
-        name: 'clientvalue',
-        directive: 'wt-scope-watch',
-        dataAttrName: 'value',
-        dataSourceType: RandomValueDataSource,
-        style: {
-          width: '30%'
-        }
       }
     ];
 

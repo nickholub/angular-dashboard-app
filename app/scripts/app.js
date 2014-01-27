@@ -22,6 +22,10 @@ angular.module('app', [
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
+        controller: 'ServerDataCtrl'
+      })
+      .when('/clientdata', {
+        templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
       .when('/serverdata', {
