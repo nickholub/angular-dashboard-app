@@ -326,6 +326,15 @@ module.exports = function (grunt) {
     },
     less: {
       theme: 'default',
+      local: {
+        options: {
+          paths: ['<%= yeoman.app %>/styles'],
+          sourceMap: true
+        },
+        files: {
+          '<%= yeoman.app %>/styles/main.css': ['.tmp/styles/main.less']
+        }
+      },
       development: {
         options: {
           paths: ['<%= yeoman.app %>/styles'],
