@@ -29,11 +29,25 @@ angular.module('ui.dashboard.widgets')
 
         scope.gauge = new Gauge(element[0], config);
         scope.gauge.render();
-        scope.gauge.redraw(scope.value);
 
-        scope.$watch('value', function () {
+        function update(value) {
+          var percentage;
+          if (_.isString(value)) {
+            percentage = parseFloat(value);
+          } else if (_.isNumber(value)) {
+            percentage = value;
+          }
+
+          if (!_.isUndefined(percentage)) {
+            scope.gauge.redraw(percentage);
+          }
+        }
+
+        update(0);
+
+        scope.$watch('value', function (value) {
           if (scope.gauge) {
-            scope.gauge.redraw(scope.value);
+            update(value);
           }
         });
       }
