@@ -100,25 +100,37 @@ angular.module('app')
 
     //var defaultWidgets = _.clone(widgetDefinitions);
     var defaultWidgets = [
-      copy('Value'),
       copy('Value', {
+        title: 'Value 1'
+      }),
+      copy('Value', {
+        title: 'Value 2',
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
         }
       }),
-      copy('Progressbar'),
-      copy('Line Chart'),
+      copy('Progressbar', {
+        title: 'Progressbar',
+      }),
       copy('Line Chart', {
+        title: 'Line Chart 1',
+      }),
+      copy('Line Chart', {
+        title: 'Line Chart 2',
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.chartValue2_{"type":"timeseries","minValue":0,"maxValue":100}' //TODO
         }
       }),
-      copy('TopN'),
-      copy('Gauge'),
-      copy('Topics')
+      copy('TopN', {
+        title: 'Top N'
+      }),
+      copy('Gauge', {
+        title: 'Gauge'
+      }),
+      copy('Topics', {
+        title: 'WebSocket Topics'
+      })
     ];
-
-    console.log(defaultWidgets);
 
     $scope.dashboardOptions = {
       widgetButtons: true,
