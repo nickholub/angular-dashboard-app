@@ -81,6 +81,15 @@ angular.module('app')
       {
         name: 'Topics',
         templateUrl: 'template/topics.html'
+      },
+      {
+        name: 'JSON',
+        directive: 'wt-json',
+        dataAttrName: 'value',
+        dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.topn_{"type":"topN","n":10}' //TODO
+        }
       }
     ];
 
@@ -126,6 +135,9 @@ angular.module('app')
       }),
       copy('Gauge', {
         title: 'Gauge'
+      }),
+      copy('JSON', {
+        title: 'JSON'
       }),
       copy('Topics', {
         title: 'WebSocket Topics'
