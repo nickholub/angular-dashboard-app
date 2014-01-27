@@ -17,9 +17,6 @@ angular.module('app')
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.piValue_{"type":"simple"}' //TODO
-        },
-        style: {
-          width: '30%'
         }
       },
       {
@@ -34,9 +31,6 @@ angular.module('app')
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
-        },
-        style: {
-          width: '30%'
         }
       },
       {
