@@ -119,10 +119,10 @@ angular.module('app')
         }
       }),
       copy('Progressbar', {
-        title: 'Progressbar',
+        title: 'Progressbar'
       }),
       copy('Line Chart', {
-        title: 'Line Chart 1',
+        title: 'Line Chart 1'
       }),
       copy('Line Chart', {
         title: 'Line Chart 2',
