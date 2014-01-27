@@ -10,7 +10,11 @@ angular.module('app')
         name: 'value1',
         directive: 'wt-scope-watch',
         dataAttrName: 'value',
-        dataSourceType: RandomValueDataSource,
+        dataTypes: ['percentage', 'simple'],
+        dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: 'app.visualdata.piValue_{"type":"simple"}' //TODO
+        },
         style: {
           width: '30%'
         }
@@ -22,20 +26,23 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.piValue_{"type":"simple"}' //TODO
+          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
         },
         style: {
           width: '30%'
         }
       },
       {
-        name: 'value3',
-        directive: 'wt-scope-watch',
+        name: 'progressbar',
+        attrs: {
+          class: 'progress-striped',
+          type: 'success'
+        },
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}'
+          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
         },
         style: {
           width: '30%'
@@ -92,24 +99,17 @@ angular.module('app')
         }
       },
       {
-        name: 'progressbar',
-        attrs: {
-          class: 'progress-striped',
-          type: 'success'
-        },
+        name: 'topics',
+        templateUrl: 'template/topics.html'
+      },
+      {
+        name: 'clientvalue',
+        directive: 'wt-scope-watch',
         dataAttrName: 'value',
-        dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
-        dataSourceOptions: {
-          defaultTopic: 'app.visualdata.percentage_{"type":"percentage"}' //TODO
-        },
+        dataSourceType: RandomValueDataSource,
         style: {
           width: '30%'
         }
-      },
-      {
-        name: 'topics',
-        templateUrl: 'template/topics.html'
       }
     ];
 
@@ -140,23 +140,21 @@ angular.module('app')
     }, $scope);
   })
   .controller('TopicCtrl', function ($scope, webSocket) {
+    $scope.prevTopic = function () {
+      var index = $scope.topicDefs.indexOf($scope.topic);
+      var prev = ($scope.topicDefs.length + index - 1) % $scope.topicDefs.length;
+      $scope.topic = $scope.topicDefs[prev];
+    };
+
+    $scope.nextTopic = function () {
+      var index = $scope.topicDefs.indexOf($scope.topic);
+      var next = (index + 1) % $scope.topicDefs.length;
+      $scope.topic = $scope.topicDefs[next];
+    };
+
     $scope.selectTopic = function (topic) {
       $scope.topic = topic;
     };
-
-    webSocket.subscribe('_latestTopics', function (message) {
-      var list = _.reject(message, function (topic) {
-        return topic.indexOf('applications.') >= 0;
-      });
-      $scope.topics = _.sortBy(list, function (topic) {
-        return topic;
-      });
-      if (message.length) {
-        $scope.topic = $scope.topics[0];
-      }
-      $scope.$apply();
-    }, $scope);
-    webSocket.send({ type: 'getLatestTopics' });
 
     var callback = function (message) {
       $scope.topicData = JSON.stringify(message, null, ' ');
@@ -165,18 +163,82 @@ angular.module('app')
 
     $scope.$watch('topic', function (newTopic, oldTopic) {
       if (oldTopic && callback) {
-        webSocket.unsubscribe(oldTopic, callback);
+        webSocket.unsubscribe(oldTopic.topic, callback);
       }
 
       if (newTopic) {
         $scope.topicData = 'Loading...';
-        webSocket.subscribe(newTopic, callback, $scope);
+        $scope.topicSchema = JSON.stringify(newTopic.schema, null, ' ');
+        webSocket.subscribe(newTopic.topic, callback, $scope);
         //$scope.$emit('topic', newTopic); //TODO
         //$rootScope.$broadcast('topic', newTopic);
       }
     });
+
+    $scope.topicDefs = [];
+
+
+    $scope.mySelections = [];
+
+    $scope.gridOptions = {
+      data: 'topicDefs',
+      selectedItems: $scope.mySelections,
+      multiSelect: false,
+      enableColumnResize: true,
+      columnDefs: [
+        { field: 'name', displayName: 'Topic', width: '70%' },
+        { field: 'type', displayName: 'Type', width: '30%' }
+      ]
+    };
+
+    webSocket.subscribe('_latestTopics', function (message) {
+      var list = _.reject(message, function (topic) {
+        return topic.indexOf('applications.') >= 0;
+      });
+
+      $scope.topicDefs = _.map(list, function (topic) {
+
+        var schemaInd = topic.indexOf('_');
+        var name = topic;
+        var type = null;
+        var schema = {};
+
+        if (schemaInd > 0) {
+          name = topic.substr(0, schemaInd);
+          var schemaStr = topic.substr(schemaInd + 1);
+          schema = JSON.parse(schemaStr);
+          type = schema.type;
+        } else {
+          topic = topic;
+          name = topic;
+        }
+
+        return {
+          topic: topic,
+          name: name,
+          schema: schema,
+          type: type
+        };
+      });
+
+      $scope.topicDefs = _.sortBy($scope.topicDefs, function (topic) {
+        return topic.name;
+      });
+
+      if (message.length) {
+        $scope.topic = $scope.topicDefs[0];
+      }
+
+      //$scope.mySelections = [$scope.topicDefs[0]];
+
+      $scope.$apply();
+    }, $scope);
+    webSocket.send({ type: 'getLatestTopics' });
+
   })
-  .controller('WidgetOptionsCtrl', function ($scope, webSocket) {
+  .controller('WidgetOptionsCtrl', function ($scope, webSocket, settings) {
+    $scope.webSocketURL = settings.webSocketURL; //TODO
+
     var widget = $scope.widget;
     if (widget && widget.dataSource) {
       $scope.topic = widget.dataSource.topic;
