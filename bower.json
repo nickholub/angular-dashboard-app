@@ -14,7 +14,7 @@
     "bootstrap": "~3.0.3",
     "angular-bootstrap": "0.9.0",
     "angular-route": "~1.2.6",
-    "angular-ui-dashboard": "git@github.com:nickholub/angular-ui-dashboard.git",
+    "angular-ui-dashboard": "git@github.com:nickholub/angular-ui-dashboard.git#master",
     "jquery-ui": "~1.10.3",
     "underscore": "~1.5.2",
     "ng-grid": "~2.0.7",
