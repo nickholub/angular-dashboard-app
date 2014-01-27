@@ -7,7 +7,8 @@ angular.module('ui.dashboard.widgets')
       replace: true,
       templateUrl: 'scripts/widgets/scopeWatch/scopeWatch.html',
       scope: {
-        scopeValue: '=value'
+        scopeValue: '=value',
+        valueClass: '@valueClass'
       }
     };
   });

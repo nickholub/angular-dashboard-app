@@ -22,6 +22,9 @@ angular.module('app')
       {
         name: 'value2',
         directive: 'wt-scope-watch',
+        attrs: {
+          'value-class': 'alert-info'
+        },
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
