@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('ServerDataCtrl', function ($scope, webSocket, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource) {
+  .controller('ServerDataCtrl', function ($scope, webSocket, Gateway, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource) {
     $scope.value1 = 'not defined';
     $scope.value2 = 'not defined';
 
@@ -145,20 +145,24 @@ angular.module('app')
       optionsTemplateUrl: 'template/widgetOptions.html'
     };
 
-    //TODO
-    $scope.serverValue = 0;
-    webSocket.subscribe(settings.randomValueTopic, function (message) {
-      $scope.serverValue = message.value;
-      $scope.$apply();
-    }, $scope);
+    // initialize widgets with default topics
+    var topicsPromise = Gateway.getTopics();
 
-    webSocket.subscribe(settings.topNTopic, function (message) {
-      var list = [];
-      _.each(message, function (value, key) {
-        list.push({ name: key, value: parseInt(value, 10) });
-      }, $scope);
+    $scope.$on('widgetAdded', function (event, widget) {
+      event.stopPropagation();
 
-      $scope.serverTopTen = list;
-      $scope.$apply();
-    }, $scope);
+      if (widget.dataSource && widget.dataSourceOptions && widget.dataSourceOptions.defaultTopic) {
+        topicsPromise.then(function (topics) {
+          var defaultTopic = widget.dataSourceOptions.defaultTopic;
+
+          var topic = _.find(topics, function (topic) {
+            return topic.name.indexOf(defaultTopic) >= 0;
+          });
+
+          if (topic) {
+            widget.dataSource.update(topic.topic);
+          }
+        });
+      }
+    });
   });
