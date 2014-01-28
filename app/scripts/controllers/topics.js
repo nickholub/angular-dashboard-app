@@ -38,8 +38,6 @@ angular.module('app')
     $scope.topics = [];
 
     Gateway.getTopics().then(function (topics) {
-      console.log('adf');
-      console.log(topics);
       $scope.topics = topics;
       if (topics.length) {
         $scope.topic = $scope.topics[0];
