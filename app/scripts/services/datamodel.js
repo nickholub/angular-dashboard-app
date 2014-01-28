@@ -17,9 +17,11 @@ angular.module('app.service')
     };
 
     TimeSeriesDataSource.prototype.updateScope = function (value) {
+      value = _.isArray(value) ? value[0] : value;
+
       this.items.push({
-        timestamp: parseInt(value[0].timestamp, 10), //TODO
-        value: parseInt(value[0].value, 10) //TODO
+        timestamp: parseInt(value.timestamp, 10), //TODO
+        value: parseInt(value.value, 10) //TODO
       });
 
       if (this.items > 100) { //TODO
