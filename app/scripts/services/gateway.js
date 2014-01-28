@@ -18,7 +18,9 @@ angular.module('app.service')
             var schema = {};
 
             if (schemaInd > 0) {
-              name = topic.substr(0, schemaInd - 1);
+              var start = topic.indexOf('visualdata');
+              var end = schemaInd - 1;
+              name = topic.substr(start, end - start);
               var schemaStr = topic.substr(schemaInd);
               schema = JSON.parse(schemaStr);
               type = schema.type;
