@@ -30,7 +30,7 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.percentage
+          defaultTopic: settings.topic.visualdata.progress
         }
       },
       {
