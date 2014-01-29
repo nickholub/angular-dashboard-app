@@ -22,9 +22,11 @@ angular.module('app')
       $scope.topics = [];
 
       Gateway.getTopics().then(function (topics) {
-        topics = _.reject(topics, function (topic) {
-          return !topic.schema || !_.contains(widget.dataTypes, topic.schema.type);
-        });
+        if (widget.dataTypes) {
+          topics = _.reject(topics, function (topic) {
+            return !topic.schema || !_.contains(widget.dataTypes, topic.schema.type);
+          });
+        }
 
         $scope.topics = topics;
         $scope.topic = _.findWhere($scope.topics, {topic: widget.dataSource.topic});
