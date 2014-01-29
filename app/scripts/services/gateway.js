@@ -8,32 +8,21 @@ angular.module('app.service')
 
         webSocket.subscribe('_latestTopics', function (message) {
           var list = _.reject(message, function (topic) {
-            return topic.indexOf('application_') !== 0;
+            return topic.indexOf('AppData{\"schema\"') !== 0;
           });
 
           var topics = _.map(list, function (topic) {
-            var schemaInd = topic.indexOf('{');
-            var name = topic;
-            var type = null;
-            var schema = {};
+            var jsonInd = topic.indexOf('{');
 
-            if (schemaInd > 0) {
-              var start = topic.indexOf('visualdata');
-              var end = schemaInd - 1;
-              name = topic.substr(start, end - start);
-              var schemaStr = topic.substr(schemaInd);
-              schema = JSON.parse(schemaStr);
-              type = schema.type;
-            } else {
-              topic = topic;
-              name = topic;
-            }
+            var jsonString = topic.substr(jsonInd);
+
+            var topicData = JSON.parse(jsonString);
 
             return {
               topic: topic,
-              name: name,
-              schema: schema,
-              type: type
+              name: topicData.topicName,
+              schema: topicData.schema,
+              type: topicData.schema.type
             };
           });
 
