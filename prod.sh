@@ -1,1 +1,1 @@
-NODE_ENV=production PORT=3007 node app.js
+NODE_ENV=production PORT=3007 GATEWAY_HOST=localhost:9090 forever start app.js
