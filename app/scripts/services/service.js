@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.service', [])
+angular.module('app.service', ['app.websocket'])
   .constant('pieChartSampleData', [
     {
       key: 'One',

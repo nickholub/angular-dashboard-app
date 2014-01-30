@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('app.service')
-  .factory('Gateway', function ($rootScope, $q, webSocket) {
+  .factory('Gateway', function ($rootScope, $q, $http, webSocket, settings) {
     return {
-      getTopics: function () {
+      getDataTopics: function () {
         var deferred = $q.defer();
 
         webSocket.subscribe('_latestTopics', function (message) {
@@ -20,10 +20,60 @@ angular.module('app.service')
 
             return {
               topic: topic,
+              appId: topicData.appId,
               name: topicData.topicName,
               schema: topicData.schema,
               type: topicData.schema.type
             };
+          });
+
+          deferred.resolve(topics);
+          //$rootScope.$apply();
+        }, $rootScope);
+        webSocket.send({ type: 'getLatestTopics' });
+        //TODO unsubscribe
+
+        return deferred.promise;
+      },
+
+      getRunningApps: function () {
+        var deferred = $q.defer();
+
+        var url = settings.restBaseURL + 'applications?jsonp=JSON_CALLBACK';
+        $http.jsonp(url)
+          .success(function (data) {
+            if (data && data.apps && data.apps.length > 0) {
+              var apps = _.reject(data.apps, function (app) {
+                return app.state !== 'RUNNING';
+              });
+              apps = _.sortBy(apps, function (app) {
+                return (-app.startedTime);
+              });
+
+              deferred.resolve(apps);
+            }
+          });
+
+        return deferred.promise;
+      },
+
+      getTopics: function () {
+        var deferred = $q.defer();
+
+        var topicsPromise = this.getDataTopics();
+        var appsPromise = this.getRunningApps();
+
+        $q.all({ topics: topicsPromise, apps: appsPromise }).then(function (resolutions) {
+          var topics = resolutions.topics;
+          var apps = resolutions.apps;
+
+          var appIdMap = {};
+          _.each(apps, function (app) {
+            appIdMap[app.id] = true;
+          });
+
+          topics = _.reject(topics, function (topic) {
+            return !appIdMap.hasOwnProperty(topic.appId);
           });
 
           topics = _.sortBy(topics, function (topic) {
@@ -31,9 +81,7 @@ angular.module('app.service')
           });
 
           deferred.resolve(topics);
-          $rootScope.$apply();
-        }, $rootScope);
-        webSocket.send({ type: 'getLatestTopics' });
+        });
 
         return deferred.promise;
       }

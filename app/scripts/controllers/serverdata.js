@@ -13,7 +13,7 @@ angular.module('app')
         attrs: {
           'value-class': 'alert-info'
         },
-        dataTypes: ['pecentage', 'simple'],
+        dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.piValue

@@ -6,6 +6,8 @@ config.port = process.env.PORT || 3000;
 config.settings = {};
 var settings = config.settings;
 settings.webSocketURL = 'ws://localhost:9090/pubsub';
+settings.restBaseURL = 'http://localhost:9090/ws/v1/';
+
 settings.randomValueTopic = 'randomValue';
 settings.topNTopic = 'demos.twitter.topURLs';
 
