@@ -139,6 +139,7 @@ angular.module('app')
     ];
 
     $scope.dashboardOptions = {
+      useLocalStorage: false, //TODO enable by default
       widgetButtons: true,
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgets,
