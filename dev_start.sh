@@ -1,0 +1,1 @@
+PORT=3005 GATEWAY_HOST=localhost:9090 forever start app.js
