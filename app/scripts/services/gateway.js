@@ -39,7 +39,7 @@ angular.module('app.service')
       getRunningApps: function () {
         var deferred = $q.defer();
 
-        var url = settings.restBaseURL + 'applications?jsonp=JSON_CALLBACK';
+        var url = settings.restBaseURL + 'applications?states=running&jsonp=JSON_CALLBACK';
         $http.jsonp(url)
           .success(function (data) {
             if (data && data.apps && data.apps.length > 0) {
