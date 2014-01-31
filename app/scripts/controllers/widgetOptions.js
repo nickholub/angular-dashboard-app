@@ -2,7 +2,7 @@
 
 angular.module('app')
   .controller('WidgetOptionsCtrl', function ($scope, webSocket, Gateway, settings) {
-    $scope.webSocketURL = settings.webSocketURL; //TODO
+    $scope.dataSourceName = 'Gateway (' + settings.gatewayHost + ')'; //TODO
 
     $scope.prevTopic = function () {
       var index = $scope.topics.indexOf($scope.topic);
