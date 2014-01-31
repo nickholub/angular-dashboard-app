@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('ServerDataCtrl', function ($scope, webSocket, Gateway, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource) {
+  .controller('ServerDataCtrl', function ($scope, webSocket, Gateway, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource, PieChartDataSource) {
     $scope.value1 = 'not defined';
     $scope.value2 = 'not defined';
 
@@ -55,6 +55,20 @@ angular.module('app')
         dataAttrName: 'data',
         dataTypes: ['topN'],
         dataSourceType: WebSocketDataSource,
+        dataSourceOptions: {
+          defaultTopic: settings.topic.visualdata.topn
+        }
+      },
+      {
+        name: 'Pie Chart',
+        directive: 'wt-pie-chart',
+        style: {
+          width: '350px',
+          height: '350px'
+        },
+        dataAttrName: 'data',
+        dataTypes: ['topN'],
+        dataSourceType: PieChartDataSource,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.topn
         }
@@ -126,6 +140,9 @@ angular.module('app')
       }),
       copy('TopN', {
         title: 'Top N'
+      }),
+      copy('Pie Chart', {
+        title: 'Pie Chart'
       }),
       copy('Gauge', {
         title: 'Gauge'

@@ -1,6 +1,42 @@
 'use strict';
 
 angular.module('app.service')
+  .factory('PieChartDataSource', function (WebSocketDataSource) {
+    function PieChartDataSource() {
+    }
+
+    PieChartDataSource.prototype = Object.create(WebSocketDataSource.prototype);
+
+    PieChartDataSource.prototype.init = function () {
+      WebSocketDataSource.prototype.init.call(this);
+      this.data = [];
+    };
+
+    PieChartDataSource.prototype.update = function (newTopic) {
+      WebSocketDataSource.prototype.update.call(this, newTopic);
+    };
+
+    PieChartDataSource.prototype.updateScope = function (value) {
+      var sum = _.reduce(value, function (memo, item) {
+        return memo + parseFloat(item.value);
+      }, 0);
+
+      var sectors = _.map(value, function (item) {
+        return {
+          key: item.name,
+          y: item.value / sum
+        };
+      });
+
+      sectors = _.sortBy(sectors, function (item) {
+        return item.key;
+      });
+
+      WebSocketDataSource.prototype.updateScope.call(this, sectors);
+    };
+
+    return PieChartDataSource;
+  })
   .factory('TimeSeriesDataSource', function (WebSocketDataSource) {
     function TimeSeriesDataSource() {
     }
