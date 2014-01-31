@@ -73,10 +73,6 @@ angular.module('app')
         }
       },
       {
-        name: 'Topics',
-        templateUrl: 'template/topics.html'
-      },
-      {
         name: 'JSON',
         directive: 'wt-json',
         dataAttrName: 'value',
@@ -84,6 +80,10 @@ angular.module('app')
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.topn
         }
+      },
+      {
+        name: 'WebSocket Debugger',
+        templateUrl: 'template/topics.html'
       }
     ];
 
@@ -133,8 +133,8 @@ angular.module('app')
       copy('JSON', {
         title: 'JSON'
       }),
-      copy('Topics', {
-        title: 'WebSocket Topics'
+      copy('WebSocket Debugger', {
+        title: 'WebSocket Debugger'
       })
     ];
 
