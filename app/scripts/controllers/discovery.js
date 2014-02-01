@@ -13,7 +13,6 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.piValue
         }
       },
       {
@@ -27,7 +26,6 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.progress
         }
       },
       {
@@ -37,7 +35,7 @@ angular.module('app')
         dataTypes: ['timeseries'],
         dataSourceType: TimeSeriesDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.chartValue
+
         },
         style: {
           width: '50%'
@@ -53,7 +51,6 @@ angular.module('app')
         dataTypes: ['topN'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.topn
         }
       },
       {
@@ -67,7 +64,6 @@ angular.module('app')
         dataTypes: ['topN'],
         dataSourceType: PieChartDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.topn
         }
       },
       {
@@ -77,7 +73,6 @@ angular.module('app')
         dataTypes: ['percentage', 'simple'],
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.percentage
         },
         style: {
           width: '250px'
@@ -89,7 +84,6 @@ angular.module('app')
         dataAttrName: 'value',
         dataSourceType: WebSocketDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.topn
         }
       },
       {
@@ -129,28 +123,26 @@ angular.module('app')
       var appTopics = _.where(topics, { appId: appId });
 
       var widgets = [];
-      function addWidget(widget) {
-        widgets.push(copy(widget));
+      function addWidget(name, widget) {
+        widgets.push(copy(name, widget));
       }
       var gaugeUsed = false;
 
       _.each(appTopics, function (topic) {
-        console.log(topic);
         var type = topic.schema.type;
-
 
         if (type === 'timeseries') {
           addWidget('Line Chart', {
             title: 'Line Chart',
             dataSourceOptions: {
-              defaultTopic: topic.topic
+              topic: topic.topic
             }
           });
         } else if (type === 'topN') {
           addWidget('TopN', {
             title: 'Top N',
             dataSourceOptions: {
-              defaultTopic: topic.topic
+              topic: topic.topic
             }
           });
         } else if (type === 'percentage') {
@@ -158,7 +150,7 @@ angular.module('app')
             addWidget('Gauge', {
               title: 'Gauge',
               dataSourceOptions: {
-                defaultTopic: topic.topic
+                topic: topic.topic
               }
             });
             gaugeUsed = true;
@@ -166,13 +158,13 @@ angular.module('app')
             addWidget('Progressbar', {
               title: 'Progressbar',
               dataSourceOptions: {
-                defaultTopic: topic.topic
+                topic: topic.topic
               }
             });
           }
         }
-
       });
+
       $scope.dashboardOptions.loadWidgets(widgets);
     });
 
@@ -182,13 +174,23 @@ angular.module('app')
     $scope.$on('widgetAdded', function (event, widget) {
       event.stopPropagation();
 
-      if (widget.dataSource && widget.dataSourceOptions && widget.dataSourceOptions.defaultTopic) {
+      if (widget.dataSource && widget.dataSourceOptions && widget.dataSourceOptions.topic) {
         topicsPromise.then(function (topics) {
-          var defaultTopic = widget.dataSourceOptions.defaultTopic;
+          var selTopic = widget.dataSourceOptions.topic;
 
-          var topic = _.find(topics, function (topic) {
-            return topic.name.indexOf(defaultTopic) >= 0;
-          });
+          var topic = null;
+
+          if (selTopic) {
+            topic = _.find(topics, function (topic) {
+              return topic.topic === selTopic;
+            });
+          } else {
+            var defaultTopic = widget.dataSourceOptions.defaultTopic;
+
+            topic = _.find(topics, function (topic) {
+              return topic.name.indexOf(defaultTopic) >= 0;
+            });
+          }
 
           if (topic) {
             widget.dataSource.update(topic.topic);
