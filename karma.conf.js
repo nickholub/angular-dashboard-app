@@ -21,7 +21,7 @@ module.exports = function(config) {
       'app/bower_components/angular-sanitize/angular-sanitize.js',
       'app/bower_components/angular-ui-sortable/src/sortable.js',
       'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-      'app/bower_components/angular-ui-dashboard/src/angular-ui-dashboard.js',
+      'app/bower_components/angular-ui-dashboard/dist/angular-ui-dashboard.js',
       'app/bower_components/ng-grid/ng-grid-2.0.7.debug.js',
       'app/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
       'app/bower_components/pnotify/jquery.pnotify.js',

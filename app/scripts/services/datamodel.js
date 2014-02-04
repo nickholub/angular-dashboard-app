@@ -1,5 +1,7 @@
 'use strict';
 
+angular.module('app.service', ['app.websocket']);
+
 angular.module('app.service')
   .factory('PieChartDataSource', function (WebSocketDataSource) {
     function PieChartDataSource() {
