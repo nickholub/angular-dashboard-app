@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('app')
-  .controller('DiscoveryCtrl', function ($scope, webSocket, Gateway, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource, PieChartDataSource) {
+  .controller('DiscoveryCtrl', function ($scope, webSocket, Gateway, settings,
+                                         RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource,
+                                         PieChartDataSource, notificationService) {
     var widgetDefinitions = [
       {
         name: 'Value',
@@ -123,7 +125,9 @@ angular.module('app')
         return (-topic.appStartedTime);
       });
 
-      var appId = topics[0].appId; //TODO
+      var selTopic = topics[0];
+
+      var appId = selTopic.appId; //TODO
       var appTopics = _.where(topics, { appId: appId });
 
       var widgets = [];
@@ -177,6 +181,17 @@ angular.module('app')
       });
 
       $scope.dashboardOptions.loadWidgets(widgets);
+
+      notificationService.notify({
+        title: 'Dashboard Loaded',
+        text: 'Dashboard for application {name} ({id}) has been loaded.'
+          .replace('{name}', selTopic.appName)
+          .replace('{id}', selTopic.appId),
+        type: 'success',
+        delay: 5000,
+        icon: false,
+        history: false
+      });
     });
 
     // initialize widgets with default topics

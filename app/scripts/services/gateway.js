@@ -77,7 +77,9 @@ angular.module('app.service')
           });
 
           _.each(topics, function (topic) {
-            topic.appStartedTime = appIdMap[topic.appId].startedTime;
+            var app = appIdMap[topic.appId];
+            topic.appName = app.name;
+            topic.appStartedTime = app.startedTime;
           });
 
           topics = _.sortBy(topics, function (topic) {
