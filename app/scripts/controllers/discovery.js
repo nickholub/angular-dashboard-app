@@ -119,6 +119,10 @@ angular.module('app')
         return;
       }
 
+      topics = _.sortBy(topics, function (topic) {
+        return (-topic.appStartedTime);
+      });
+
       var appId = topics[0].appId; //TODO
       var appTopics = _.where(topics, { appId: appId });
 
@@ -162,6 +166,13 @@ angular.module('app')
               }
             });
           }
+        } else if (type === 'piechart') {
+          addWidget('Pie Chart', {
+            title: 'Pie Chart',
+            dataSourceOptions: {
+              topic: topic.topic
+            }
+          });
         }
       });
 

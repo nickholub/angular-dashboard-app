@@ -69,11 +69,15 @@ angular.module('app.service')
 
           var appIdMap = {};
           _.each(apps, function (app) {
-            appIdMap[app.id] = true;
+            appIdMap[app.id] = app;
           });
 
           topics = _.reject(topics, function (topic) {
             return !appIdMap.hasOwnProperty(topic.appId);
+          });
+
+          _.each(topics, function (topic) {
+            topic.appStartedTime = appIdMap[topic.appId].startedTime;
           });
 
           topics = _.sortBy(topics, function (topic) {
