@@ -17,6 +17,6 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('should be defined', function () {
-    expect(MainCtrl).toBeDefined;
+    expect(MainCtrl).toBeDefined();
   });
 });

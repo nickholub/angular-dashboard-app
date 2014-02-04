@@ -15,3 +15,4 @@ settings.topic.visualdata.progress = 'progress';
 settings.topic.visualdata.chartValue = 'chartValue';
 settings.topic.visualdata.chartValue2 = 'chartValue2';
 settings.topic.visualdata.topn = 'topn';
+settings.topic.visualdata.pieChart = 'piechart';

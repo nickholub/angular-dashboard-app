@@ -67,10 +67,10 @@ angular.module('app')
           height: '350px'
         },
         dataAttrName: 'data',
-        dataTypes: ['topN'],
+        dataTypes: ['piechart'],
         dataSourceType: PieChartDataSource,
         dataSourceOptions: {
-          defaultTopic: settings.topic.visualdata.topn
+          defaultTopic: settings.topic.visualdata.pieChart
         }
       },
       {

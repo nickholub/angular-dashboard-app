@@ -23,7 +23,7 @@ angular.module('app.service')
 
       var sectors = _.map(value, function (item) {
         return {
-          key: item.name,
+          key: item.label,
           y: item.value / sum
         };
       });
