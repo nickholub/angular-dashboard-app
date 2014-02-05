@@ -44,8 +44,8 @@ angular.module('app')
       columnDefs: [
         { field: 'id', displayName: 'Id', cellTemplate: linkTemplate, width: 250 },
         { field: 'name', displayName: 'Name' },
-        { field: 'startedTime', displayName: 'Start Time', cellFilter: 'date:\'yyyy-MM-dd HH:mm:ss\'', width: 150 },
-        { field: 'topicCount', displayName: 'Topic Count' }
+        { field: 'startedTime', displayName: 'Start Time', cellFilter: 'date:\'yyyy-MM-dd HH:mm:ss\'', width: 200 },
+        { field: 'topicCount', displayName: 'Topic Count', width: 150 }
       ]
     };
   });
