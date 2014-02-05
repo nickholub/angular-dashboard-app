@@ -28,6 +28,14 @@ angular.module('app', [
         templateUrl: 'views/main.html',
         controller: 'DiscoveryCtrl'
       })
+      .when('/apps', {
+        templateUrl: 'views/apps.html',
+        controller: 'AppsCtrl'
+      })
+      .when('/apps/:appId', {
+        templateUrl: 'views/main.html',
+        controller: 'DiscoveryCtrl'
+      })
       .when('/clientdata', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'

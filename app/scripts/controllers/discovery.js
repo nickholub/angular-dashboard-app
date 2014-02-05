@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('DiscoveryCtrl', function ($scope, webSocket, Gateway, settings,
+  .controller('DiscoveryCtrl', function ($scope, $routeParams, webSocket, Gateway, settings,
                                          RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource,
                                          PieChartDataSource, notificationService) {
     var widgetDefinitions = [
@@ -125,9 +125,16 @@ angular.module('app')
         return (-topic.appStartedTime);
       });
 
-      var selTopic = topics[0];
+      var appId;
 
-      var appId = selTopic.appId; //TODO
+      if ($routeParams.appId) {
+        appId = $routeParams.appId;
+      } else {
+        appId = topics[0].appId;
+      }
+
+      var selTopic = _.findWhere(topics, { appId: appId });
+
       var appTopics = _.where(topics, { appId: appId });
 
       var widgets = [];
