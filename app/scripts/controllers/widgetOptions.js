@@ -20,6 +20,9 @@ angular.module('app')
 
     if (widget && widget.dataSource) {
       $scope.topics = [];
+      if (widget.dataTypes) {
+        $scope.dataTypes = widget.dataTypes.join(', ');
+      }
 
       Gateway.getTopics().then(function (topics) {
         if (widget.dataTypes) {
