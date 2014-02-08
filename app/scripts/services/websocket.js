@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('app.websocket', ['ui.notify'])
+  .factory('visibly', function ($window) {
+    return $window.visibly;
+  })
   .provider('webSocket', function () {
 
     var webSocketURL;
     var webSocketObject; // for testing only
 
     return {
-      $get: function ($q,  $rootScope, notificationService) {
+      $get: function ($q,  $rootScope, $timeout, notificationService, visibly) {
         if (!webSocketURL && !webSocketObject) {
           throw 'WebSocket URL is not defined';
         }
@@ -60,7 +63,13 @@ angular.module('app.websocket', ['ui.notify'])
 
         var topicMap = {}; // topic -> [callbacks] mapping
 
+        var stopUpdates = false;
+
         socket.onmessage = function (event) {
+          if (stopUpdates) { // stop updates if page is inactive
+            return;
+          }
+
           var message = JSON.parse(event.data);
 
           var topic = message.topic;
@@ -69,6 +78,25 @@ angular.module('app.websocket', ['ui.notify'])
             topicMap[topic].fire(message.data);
           }
         };
+
+        var timeoutPromise;
+
+        visibly.onHidden(function () {
+          timeoutPromise = $timeout(function () {
+            stopUpdates = true;
+            timeoutPromise = null;
+          }, 60000);
+        });
+
+        visibly.onVisible(function () {
+          stopUpdates = false;
+
+          if (timeoutPromise) {
+            $timeout.cancel(timeoutPromise);
+          }
+
+          console.log('visible');
+        });
 
         return {
           send: function (message) {
