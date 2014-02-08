@@ -89,6 +89,18 @@ angular.module('app.websocket', ['ui.notify'])
         });
 
         visibly.onVisible(function () {
+          if (stopUpdates && !webSocketError) {
+            notificationService.notify({
+              title: 'Warning',
+              text: 'Page has not been visible for more than 60 seconds. WebSocket real-time updates have been suspended to conserve system resources. ' +
+                'Refreshing the page is recommended.',
+              type: 'warning',
+              icon: false,
+              hide: false,
+              history: false
+            });
+          }
+
           stopUpdates = false;
 
           if (timeoutPromise) {
