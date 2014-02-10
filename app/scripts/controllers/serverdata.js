@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('ServerDataCtrl', function ($scope, webSocket, Gateway, settings, RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource, PieChartDataSource) {
+  .controller('ServerDataCtrl', function ($scope, webSocket, Gateway, settings, RandomValueDataModel, WebSocketDataModel, TimeSeriesDataModel, PieChartDataModel) {
     $scope.value1 = 'not defined';
     $scope.value2 = 'not defined';
 
@@ -14,7 +14,7 @@ angular.module('app')
           'value-class': 'alert-info'
         },
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.piValue
         }
@@ -28,7 +28,7 @@ angular.module('app')
         },
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.progress
         }
@@ -38,7 +38,7 @@ angular.module('app')
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
         dataTypes: ['timeseries'],
-        dataSourceType: TimeSeriesDataSource,
+        dataSourceType: TimeSeriesDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.chartValue
         },
@@ -54,7 +54,7 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['topN'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.topn
         }
@@ -68,7 +68,7 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['piechart'],
-        dataSourceType: PieChartDataSource,
+        dataSourceType: PieChartDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.pieChart
         }
@@ -78,7 +78,7 @@ angular.module('app')
         directive: 'wt-gauge',
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.percentage
         },
@@ -90,7 +90,7 @@ angular.module('app')
         name: 'JSON',
         directive: 'wt-json',
         dataAttrName: 'value',
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
           defaultTopic: settings.topic.visualdata.topn
         }
@@ -156,7 +156,7 @@ angular.module('app')
     ];
 
     $scope.dashboardOptions = {
-      useLocalStorage: false, //TODO enable by default
+      useLocalStorage: true, //TODO enable by default
       widgetButtons: true,
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgets,

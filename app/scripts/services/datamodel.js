@@ -3,22 +3,22 @@
 angular.module('app.service', ['app.websocket']);
 
 angular.module('app.service')
-  .factory('PieChartDataSource', function (WebSocketDataSource) {
-    function PieChartDataSource() {
+  .factory('PieChartDataModel', function (WebSocketDataModel) {
+    function PieChartDataModel() {
     }
 
-    PieChartDataSource.prototype = Object.create(WebSocketDataSource.prototype);
+    PieChartDataModel.prototype = Object.create(WebSocketDataModel.prototype);
 
-    PieChartDataSource.prototype.init = function () {
-      WebSocketDataSource.prototype.init.call(this);
+    PieChartDataModel.prototype.init = function () {
+      WebSocketDataModel.prototype.init.call(this);
       this.data = [];
     };
 
-    PieChartDataSource.prototype.update = function (newTopic) {
-      WebSocketDataSource.prototype.update.call(this, newTopic);
+    PieChartDataModel.prototype.update = function (newTopic) {
+      WebSocketDataModel.prototype.update.call(this, newTopic);
     };
 
-    PieChartDataSource.prototype.updateScope = function (value) {
+    PieChartDataModel.prototype.updateScope = function (value) {
       var sum = _.reduce(value, function (memo, item) {
         return memo + parseFloat(item.value);
       }, 0);
@@ -34,27 +34,27 @@ angular.module('app.service')
         return item.key;
       });
 
-      WebSocketDataSource.prototype.updateScope.call(this, sectors);
+      WebSocketDataModel.prototype.updateScope.call(this, sectors);
     };
 
-    return PieChartDataSource;
+    return PieChartDataModel;
   })
-  .factory('TimeSeriesDataSource', function (WebSocketDataSource) {
-    function TimeSeriesDataSource() {
+  .factory('TimeSeriesDataModel', function (WebSocketDataModel) {
+    function TimeSeriesDataModel() {
     }
 
-    TimeSeriesDataSource.prototype = Object.create(WebSocketDataSource.prototype);
+    TimeSeriesDataModel.prototype = Object.create(WebSocketDataModel.prototype);
 
-    TimeSeriesDataSource.prototype.init = function () {
-      WebSocketDataSource.prototype.init.call(this);
+    TimeSeriesDataModel.prototype.init = function () {
+      WebSocketDataModel.prototype.init.call(this);
     };
 
-    TimeSeriesDataSource.prototype.update = function (newTopic) {
-      WebSocketDataSource.prototype.update.call(this, newTopic);
+    TimeSeriesDataModel.prototype.update = function (newTopic) {
+      WebSocketDataModel.prototype.update.call(this, newTopic);
       this.items = [];
     };
 
-    TimeSeriesDataSource.prototype.updateScope = function (value) {
+    TimeSeriesDataModel.prototype.updateScope = function (value) {
       value = _.isArray(value) ? value[0] : value;
 
       this.items.push({
@@ -71,19 +71,19 @@ angular.module('app.service')
         max: 30
       };
 
-      WebSocketDataSource.prototype.updateScope.call(this, chart);
+      WebSocketDataModel.prototype.updateScope.call(this, chart);
       this.data = [];
     };
 
-    return TimeSeriesDataSource;
+    return TimeSeriesDataModel;
   })
-  .factory('WebSocketDataSource', function (WidgetDataModel, webSocket) {
-    function WebSocketDataSource() {
+  .factory('WebSocketDataModel', function (WidgetDataModel, webSocket) {
+    function WebSocketDataModel() {
     }
 
-    WebSocketDataSource.prototype = Object.create(WidgetDataModel.prototype);
+    WebSocketDataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-    WebSocketDataSource.prototype.init = function () {
+    WebSocketDataModel.prototype.init = function () {
       this.topic = null;
       this.callback = null;
       if (this.dataSourceOptions && this.dataSourceOptions.defaultTopic) {
@@ -91,7 +91,7 @@ angular.module('app.service')
       }
     };
 
-    WebSocketDataSource.prototype.update = function (newTopic) {
+    WebSocketDataModel.prototype.update = function (newTopic) {
       var that = this;
 
       if (this.topic && this.callback) {
@@ -107,7 +107,7 @@ angular.module('app.service')
       webSocket.subscribe(this.topic, this.callback, this.widgetScope);
     };
 
-    WebSocketDataSource.prototype.destroy = function () {
+    WebSocketDataModel.prototype.destroy = function () {
       WidgetDataModel.prototype.destroy.call(this);
 
       if (this.topic && this.callback) {
@@ -115,15 +115,15 @@ angular.module('app.service')
       }
     };
 
-    return WebSocketDataSource;
+    return WebSocketDataModel;
   })
-  .factory('RandomValueDataSource', function (WidgetDataModel, $interval) {
-    function RandomValueDataSource() {
+  .factory('RandomValueDataModel', function (WidgetDataModel, $interval) {
+    function RandomValueDataModel() {
     }
 
-    RandomValueDataSource.prototype = Object.create(WidgetDataModel.prototype);
+    RandomValueDataModel.prototype = Object.create(WidgetDataModel.prototype);
 
-    RandomValueDataSource.prototype.init = function () {
+    RandomValueDataModel.prototype.init = function () {
       var base = Math.floor(Math.random() * 10) * 10;
 
       this.updateScope(base);
@@ -136,10 +136,10 @@ angular.module('app.service')
       }, 500);
     };
 
-    RandomValueDataSource.prototype.destroy = function () {
+    RandomValueDataModel.prototype.destroy = function () {
       WidgetDataModel.prototype.destroy.call(this);
       $interval.cancel(this.intervalPromise);
     };
 
-    return RandomValueDataSource;
+    return RandomValueDataModel;
   });

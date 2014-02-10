@@ -177,6 +177,17 @@ angular.module('app')
     // pie chart
     $scope.pieChartData = pieChartSampleData;
 
+    var pieChart = angular.copy(pieChartSampleData);
+
+    $interval(function () { //TODO
+      var a = pieChart[0];
+      var b = pieChart[1];
+      var sum = a.y + b.y;
+      a.y = (a.y + 1) % sum;
+      b.y = sum - a.y;
+      $scope.pieChartData = angular.copy(pieChart);
+    }, 500);
+
     // external controls
     $scope.addWidget = function (directive) {
       $scope.dashboardOptions.addWidget({

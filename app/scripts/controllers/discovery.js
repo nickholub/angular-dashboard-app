@@ -2,8 +2,8 @@
 
 angular.module('app')
   .controller('DiscoveryCtrl', function ($scope, $routeParams, webSocket, Gateway, settings,
-                                         RandomValueDataSource, WebSocketDataSource, TimeSeriesDataSource,
-                                         PieChartDataSource, notificationService) {
+                                         RandomValueDataModel, WebSocketDataModel, TimeSeriesDataModel,
+                                         PieChartDataModel, notificationService) {
     var widgetDefinitions = [
       {
         name: 'Value',
@@ -13,7 +13,7 @@ angular.module('app')
           'value-class': 'alert-info'
         },
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
         }
       },
@@ -26,7 +26,7 @@ angular.module('app')
         },
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
         }
       },
@@ -35,7 +35,7 @@ angular.module('app')
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
         dataTypes: ['timeseries'],
-        dataSourceType: TimeSeriesDataSource,
+        dataSourceType: TimeSeriesDataModel,
         dataSourceOptions: {
 
         },
@@ -51,7 +51,7 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['topN'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
         }
       },
@@ -64,7 +64,7 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['piechart'],
-        dataSourceType: PieChartDataSource,
+        dataSourceType: PieChartDataModel,
         dataSourceOptions: {
         }
       },
@@ -73,7 +73,7 @@ angular.module('app')
         directive: 'wt-gauge',
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
         },
         style: {
@@ -84,7 +84,7 @@ angular.module('app')
         name: 'JSON',
         directive: 'wt-json',
         dataAttrName: 'value',
-        dataSourceType: WebSocketDataSource,
+        dataSourceType: WebSocketDataModel,
         dataSourceOptions: {
         }
       },
