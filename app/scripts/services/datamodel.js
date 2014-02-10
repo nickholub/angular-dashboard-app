@@ -77,11 +77,11 @@ angular.module('app.service')
 
     return TimeSeriesDataSource;
   })
-  .factory('WebSocketDataSource', function (WidgetDataSource, webSocket) {
+  .factory('WebSocketDataSource', function (WidgetDataModel, webSocket) {
     function WebSocketDataSource() {
     }
 
-    WebSocketDataSource.prototype = Object.create(WidgetDataSource.prototype);
+    WebSocketDataSource.prototype = Object.create(WidgetDataModel.prototype);
 
     WebSocketDataSource.prototype.init = function () {
       this.topic = null;
@@ -108,7 +108,7 @@ angular.module('app.service')
     };
 
     WebSocketDataSource.prototype.destroy = function () {
-      WidgetDataSource.prototype.destroy.call(this);
+      WidgetDataModel.prototype.destroy.call(this);
 
       if (this.topic && this.callback) {
         webSocket.unsubscribe(this.topic, this.callback);
@@ -117,11 +117,11 @@ angular.module('app.service')
 
     return WebSocketDataSource;
   })
-  .factory('RandomValueDataSource', function (WidgetDataSource, $interval) {
+  .factory('RandomValueDataSource', function (WidgetDataModel, $interval) {
     function RandomValueDataSource() {
     }
 
-    RandomValueDataSource.prototype = Object.create(WidgetDataSource.prototype);
+    RandomValueDataSource.prototype = Object.create(WidgetDataModel.prototype);
 
     RandomValueDataSource.prototype.init = function () {
       var base = Math.floor(Math.random() * 10) * 10;
@@ -137,7 +137,7 @@ angular.module('app.service')
     };
 
     RandomValueDataSource.prototype.destroy = function () {
-      WidgetDataSource.prototype.destroy.call(this);
+      WidgetDataModel.prototype.destroy.call(this);
       $interval.cancel(this.intervalPromise);
     };
 
