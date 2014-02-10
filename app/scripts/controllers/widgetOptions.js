@@ -18,7 +18,7 @@ angular.module('app')
 
     var widget = $scope.widget;
 
-    if (widget && widget.dataSource) {
+    if (widget && widget.dataModel) {
       $scope.topics = [];
       if (widget.dataTypes) {
         $scope.dataTypes = widget.dataTypes.join(', ');
@@ -32,13 +32,13 @@ angular.module('app')
         }
 
         $scope.topics = topics;
-        $scope.topic = _.findWhere($scope.topics, {topic: widget.dataSource.topic});
+        $scope.topic = _.findWhere($scope.topics, {topic: widget.dataModel.topic});
       });
 
       $scope.$watch('topic', function (newTopic) {
-        if (newTopic && (newTopic.topic !== widget.dataSource.topic)) {
-          console.log(widget.dataSource);
-          widget.dataSource.update(newTopic.topic);
+        if (newTopic && (newTopic.topic !== widget.dataModel.topic)) {
+          console.log(widget.dataModel);
+          widget.dataModel.update(newTopic.topic);
         }
       });
 

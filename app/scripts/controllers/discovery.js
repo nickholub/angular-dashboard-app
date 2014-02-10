@@ -13,8 +13,8 @@ angular.module('app')
           'value-class': 'alert-info'
         },
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
         }
       },
       {
@@ -26,8 +26,8 @@ angular.module('app')
         },
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
         }
       },
       {
@@ -35,8 +35,8 @@ angular.module('app')
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
         dataTypes: ['timeseries'],
-        dataSourceType: TimeSeriesDataModel,
-        dataSourceOptions: {
+        dataModelType: TimeSeriesDataModel,
+        dataModelOptions: {
 
         },
         style: {
@@ -51,8 +51,8 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['topN'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
         }
       },
       {
@@ -64,8 +64,8 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['piechart'],
-        dataSourceType: PieChartDataModel,
-        dataSourceOptions: {
+        dataModelType: PieChartDataModel,
+        dataModelOptions: {
         }
       },
       {
@@ -73,8 +73,8 @@ angular.module('app')
         directive: 'wt-gauge',
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
         },
         style: {
           width: '250px'
@@ -84,8 +84,8 @@ angular.module('app')
         name: 'JSON',
         directive: 'wt-json',
         dataAttrName: 'value',
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
         }
       },
       {
@@ -149,14 +149,14 @@ angular.module('app')
         if (type === 'timeseries') {
           addWidget('Line Chart', {
             title: 'Line Chart',
-            dataSourceOptions: {
+            dataModelOptions: {
               topic: topic.topic
             }
           });
         } else if (type === 'topN') {
           addWidget('TopN', {
             title: 'Top N',
-            dataSourceOptions: {
+            dataModelOptions: {
               topic: topic.topic
             }
           });
@@ -164,7 +164,7 @@ angular.module('app')
           if (!gaugeUsed) {
             addWidget('Gauge', {
               title: 'Gauge',
-              dataSourceOptions: {
+              dataModelOptions: {
                 topic: topic.topic
               }
             });
@@ -172,7 +172,7 @@ angular.module('app')
           } else {
             addWidget('Progressbar', {
               title: 'Progressbar',
-              dataSourceOptions: {
+              dataModelOptions: {
                 topic: topic.topic
               }
             });
@@ -180,7 +180,7 @@ angular.module('app')
         } else if (type === 'piechart') {
           addWidget('Pie Chart', {
             title: 'Pie Chart',
-            dataSourceOptions: {
+            dataModelOptions: {
               topic: topic.topic
             }
           });
@@ -207,9 +207,9 @@ angular.module('app')
     $scope.$on('widgetAdded', function (event, widget) {
       event.stopPropagation();
 
-      if (widget.dataSource && widget.dataSourceOptions && widget.dataSourceOptions.topic) {
+      if (widget.dataModel && widget.dataModelOptions && widget.dataModelOptions.topic) {
         topicsPromise.then(function (topics) {
-          var selTopic = widget.dataSourceOptions.topic;
+          var selTopic = widget.dataModelOptions.topic;
 
           var topic = null;
 
@@ -218,7 +218,7 @@ angular.module('app')
               return topic.topic === selTopic;
             });
           } else {
-            var defaultTopic = widget.dataSourceOptions.defaultTopic;
+            var defaultTopic = widget.dataModelOptions.defaultTopic;
 
             topic = _.find(topics, function (topic) {
               return topic.name.indexOf(defaultTopic) >= 0;
@@ -226,7 +226,7 @@ angular.module('app')
           }
 
           if (topic) {
-            widget.dataSource.update(topic.topic);
+            widget.dataModel.update(topic.topic);
           }
         });
       }

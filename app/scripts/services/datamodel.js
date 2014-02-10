@@ -86,8 +86,8 @@ angular.module('app.service')
     WebSocketDataModel.prototype.init = function () {
       this.topic = null;
       this.callback = null;
-      if (this.dataSourceOptions && this.dataSourceOptions.defaultTopic) {
-        this.update(this.dataSourceOptions.defaultTopic);
+      if (this.dataModelOptions && this.dataModelOptions.defaultTopic) {
+        this.update(this.dataModelOptions.defaultTopic);
       }
     };
 

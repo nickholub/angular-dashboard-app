@@ -14,8 +14,8 @@ angular.module('app')
           'value-class': 'alert-info'
         },
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.piValue
         }
       },
@@ -28,8 +28,8 @@ angular.module('app')
         },
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.progress
         }
       },
@@ -38,8 +38,8 @@ angular.module('app')
         directive: 'wt-line-chart',
         dataAttrName: 'chart',
         dataTypes: ['timeseries'],
-        dataSourceType: TimeSeriesDataModel,
-        dataSourceOptions: {
+        dataModelType: TimeSeriesDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.chartValue
         },
         style: {
@@ -54,8 +54,8 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['topN'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.topn
         }
       },
@@ -68,8 +68,8 @@ angular.module('app')
         },
         dataAttrName: 'data',
         dataTypes: ['piechart'],
-        dataSourceType: PieChartDataModel,
-        dataSourceOptions: {
+        dataModelType: PieChartDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.pieChart
         }
       },
@@ -78,8 +78,8 @@ angular.module('app')
         directive: 'wt-gauge',
         dataAttrName: 'value',
         dataTypes: ['percentage', 'simple'],
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.percentage
         },
         style: {
@@ -90,8 +90,8 @@ angular.module('app')
         name: 'JSON',
         directive: 'wt-json',
         dataAttrName: 'value',
-        dataSourceType: WebSocketDataModel,
-        dataSourceOptions: {
+        dataModelType: WebSocketDataModel,
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.topn
         }
       },
@@ -122,7 +122,7 @@ angular.module('app')
       }),
       copy('Value', {
         title: 'Value 2',
-        dataSourceOptions: {
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.percentage
         }
       }),
@@ -134,7 +134,7 @@ angular.module('app')
       }),
       copy('Line Chart', {
         title: 'Line Chart 2',
-        dataSourceOptions: {
+        dataModelOptions: {
           defaultTopic: settings.topic.visualdata.chartValue2
         }
       }),
@@ -169,16 +169,16 @@ angular.module('app')
     $scope.$on('widgetAdded', function (event, widget) {
       event.stopPropagation();
 
-      if (widget.dataSource && widget.dataSourceOptions && widget.dataSourceOptions.defaultTopic) {
+      if (widget.dataModel && widget.dataModelOptions && widget.dataModelOptions.defaultTopic) {
         topicsPromise.then(function (topics) {
-          var defaultTopic = widget.dataSourceOptions.defaultTopic;
+          var defaultTopic = widget.dataModelOptions.defaultTopic;
 
           var topic = _.find(topics, function (topic) {
             return topic.name.indexOf(defaultTopic) >= 0;
           });
 
           if (topic) {
-            widget.dataSource.update(topic.topic);
+            widget.dataModel.update(topic.topic);
           }
         });
       }
