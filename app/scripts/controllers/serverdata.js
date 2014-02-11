@@ -101,62 +101,53 @@ angular.module('app')
       }
     ];
 
-    function find(name) {
-      return _.findWhere(widgetDefinitions, {name: name});
-    }
-
-    function copy(name, extend) {
-      var dest = angular.copy(find(name));
-
-      if (extend) {
-        angular.extend(dest, extend);
-      }
-
-      return dest;
-    }
-
-    //var defaultWidgets = _.clone(widgetDefinitions);
     var defaultWidgets = [
-      copy('Value', {
+      {
+        name: 'Value',
         title: 'Value 1'
-      }),
-      copy('Value', {
+      },
+      {
+        name: 'Value',
         title: 'Value 2',
         dataModelOptions: {
           defaultTopic: settings.topic.visualdata.percentage
         }
-      }),
-      copy('Progressbar', {
+      },
+      {
+        name: 'Progressbar',
         title: 'Progressbar'
-      }),
-      copy('Line Chart', {
+      },
+      {
+        name: 'Line Chart',
         title: 'Line Chart 1'
-      }),
-      copy('Line Chart', {
+      },
+      {
+        name: 'Line Chart',
         title: 'Line Chart 2',
         dataModelOptions: {
           defaultTopic: settings.topic.visualdata.chartValue2
         }
-      }),
-      copy('TopN', {
+      },
+      {
+        name: 'TopN',
         title: 'Top N'
-      }),
-      copy('Pie Chart', {
+      },
+      {
+        name: 'Pie Chart',
         title: 'Pie Chart'
-      }),
-      copy('Gauge', {
-        title: 'Gauge'
-      }),
-      copy('JSON', {
+      },
+      {
+        name: 'JSON',
         title: 'JSON'
-      }),
-      copy('WebSocket Debugger', {
+      },
+      {
+        name: 'WebSocket Debugger',
         title: 'WebSocket Debugger'
-      })
+      }
     ];
 
     $scope.dashboardOptions = {
-      useLocalStorage: true, //TODO enable by default
+      //useLocalStorage: true, //TODO enable by default
       widgetButtons: true,
       widgetDefinitions: widgetDefinitions,
       defaultWidgets: defaultWidgets,
