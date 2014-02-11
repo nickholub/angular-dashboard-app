@@ -99,7 +99,11 @@ angular.module('app')
     ];
 
 
-    var defaultWidgets = _.clone(widgetDefinitions);
+    var defaultWidgets = _.map(widgetDefinitions, function (widgetDef) {
+      return {
+        name: widgetDef.name
+      };
+    });
 
     $scope.dashboardOptions = {
       widgetButtons: true,
