@@ -77,6 +77,62 @@ angular.module('app.service')
 
     return TimeSeriesDataModel;
   })
+  .factory('MeteorTimeSeriesDataModel', function (MeteorDdp, WidgetDataModel) {
+    function MeteorTimeSeriesDataModel() {
+      var ddp = new MeteorDdp('ws://localhost:3000/websocket'); //TODO
+      this.ddp = ddp;
+
+      var that = this;
+
+      ddp.connect().done(function() {
+        console.log('Meteor connected');
+        that.update();
+      });
+    }
+
+    MeteorTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    MeteorTimeSeriesDataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
+    };
+
+    //TODO
+    MeteorTimeSeriesDataModel.prototype.update = function (collection) {
+      this.items = [];
+      collection = collection ? collection : this.dataModelOptions.collection;
+
+      this.ddp.subscribe(collection); //TODO get whole collection instead of 'added' events
+
+      var that = this;
+
+      this.ddp.watch(collection, function(value) {
+        that.updateScope(value);
+        that.widgetScope.$apply();
+      });
+    };
+
+    MeteorTimeSeriesDataModel.prototype.updateScope = function (value) {
+      value = _.isArray(value) ? value[0] : value;
+
+      this.items.push({
+        timestamp: parseInt(value.timestamp, 10), //TODO
+        value: parseInt(value.value, 10) //TODO
+      });
+
+      if (this.items > 100) { //TODO
+        this.items.shift();
+      }
+
+      var chart = {
+        data: this.items
+      };
+
+      WidgetDataModel.prototype.updateScope.call(this, chart);
+      this.data = [];
+    };
+
+    return MeteorTimeSeriesDataModel;
+  })
   .factory('WebSocketDataModel', function (WidgetDataModel, webSocket) {
     function WebSocketDataModel() {
     }

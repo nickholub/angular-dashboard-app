@@ -24,6 +24,10 @@ angular.module('app', [
         templateUrl: 'views/main.html',
         controller: 'ServerDataCtrl'
       })
+      .when('/meteor', {
+        templateUrl: 'views/main.html',
+        controller: 'MeteorCtrl'
+      })
       .when('/discovery', {
         templateUrl: 'views/main.html',
         controller: 'DiscoveryCtrl'
