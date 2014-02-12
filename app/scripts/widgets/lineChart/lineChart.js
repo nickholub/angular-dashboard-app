@@ -28,24 +28,29 @@ angular.module('ui.dashboard.widgets')
             table.setCell(i, 1, value);
           }
 
-          var lastTimestamp;
-
-          if (data.length) {
-            var last = data[data.length - 1];
-            lastTimestamp = last.timestamp;
-          } else {
-            lastTimestamp = Date.now();
-          }
-
-          var max = new Date(lastTimestamp);
-          var min = new Date(lastTimestamp - (chart.max - 1) * 1000);
-
           var chartOptions = {
             legend: 'none',
-            vAxis: { minValue: 0, maxValue: 100 },
-            hAxis: { viewWindow: { min: min, max: max }}
+            vAxis: { minValue: 0, maxValue: 100 }
             //chartArea: { top: 20, left: 30, height: 240 }
           };
+
+          if (chart.max) {
+            var lastTimestamp;
+
+            if (data.length) {
+              var last = data[data.length - 1];
+              lastTimestamp = last.timestamp;
+            } else {
+              lastTimestamp = Date.now();
+            }
+
+            var max = new Date(lastTimestamp);
+            var min = new Date(lastTimestamp - (chart.max - 1) * 1000);
+
+            angular.extend(chartOptions, {
+              hAxis: { viewWindow: { min: min, max: max }}
+            });
+          }
 
           lineChart.draw(view, chartOptions);
         }
@@ -58,7 +63,7 @@ angular.module('ui.dashboard.widgets')
             };
           }
 
-          if (chart.data && chart.max) {
+          if (chart.data) {
             draw(chart);
           }
         });
