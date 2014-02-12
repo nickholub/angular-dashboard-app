@@ -124,7 +124,8 @@ angular.module('app.service')
       }
 
       var chart = {
-        data: this.items
+        data: this.items,
+        max: 30
       };
 
       WidgetDataModel.prototype.updateScope.call(this, chart);
