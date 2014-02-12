@@ -2,9 +2,11 @@
 window.settings = {};
 
 settings.gatewayHost = 'localhost:9090';
+settings.meteorHost = 'localhost:5000';
 
 settings.webSocketURL = 'ws://' + settings.gatewayHost + '/pubsub';
 settings.restBaseURL = 'http://' + settings.gatewayHost + '/ws/v1/';
+settings.meteorURL = 'ws://' + settings.meteorHost + '/websocket';
 
 settings.topic = {};
 settings.topic.visualdata = {};

@@ -7,9 +7,11 @@ config.settings = {};
 var settings = config.settings;
 
 settings.gatewayHost = process.env.GATEWAY_HOST || 'localhost:9090';
+settings.meteorHost = process.env.METEOR_HOST || 'localhost:5000';
 
 settings.webSocketURL = 'ws://' + settings.gatewayHost + '/pubsub';
 settings.restBaseURL = 'http://' + settings.gatewayHost + '/ws/v1/';
+settings.meteorURL = 'ws://' + settings.meteorHost + '/websocket';
 
 settings.topic = {};
 settings.topic.visualdata = {};
