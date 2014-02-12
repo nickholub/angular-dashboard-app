@@ -44,7 +44,7 @@ MeteorDdp.prototype.connect = function() {
   self.sock.onmessage = function(msg) {
     var data = JSON.parse(msg.data);
 
-    //console.log(msg);
+    console.log(msg);
 
     switch (data.msg) {
       case 'connected':

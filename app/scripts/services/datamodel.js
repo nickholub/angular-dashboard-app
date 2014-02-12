@@ -133,6 +133,43 @@ angular.module('app.service')
 
     return MeteorTimeSeriesDataModel;
   })
+  .factory('MeteorDataModel', function (MeteorDdp, WidgetDataModel) {
+    function MeteorTimeSeriesDataModel() {
+      var ddp = new MeteorDdp('ws://localhost:3000/websocket'); //TODO
+      this.ddp = ddp;
+
+      var that = this;
+
+      ddp.connect().done(function() {
+        console.log('Meteor connected');
+        that.update();
+      });
+    }
+
+    MeteorTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    MeteorTimeSeriesDataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
+    };
+
+    //TODO
+    MeteorTimeSeriesDataModel.prototype.update = function (collection) {
+      this.items = [];
+      collection = collection ? collection : this.dataModelOptions.collection;
+
+      this.ddp.subscribe(collection); //TODO get whole collection instead of 'added' events
+
+      var that = this;
+
+      this.ddp.watch(collection, function(value) {
+        console.log(value);
+        that.updateScope(value);
+        that.widgetScope.$apply();
+      });
+    };
+
+    return MeteorTimeSeriesDataModel;
+  })
   .factory('WebSocketDataModel', function (WidgetDataModel, webSocket) {
     function WebSocketDataModel() {
     }
