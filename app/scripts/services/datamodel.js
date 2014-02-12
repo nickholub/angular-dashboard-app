@@ -79,7 +79,7 @@ angular.module('app.service')
   })
   .factory('MeteorTimeSeriesDataModel', function (MeteorDdp, WidgetDataModel) {
     function MeteorTimeSeriesDataModel() {
-      var ddp = new MeteorDdp('ws://localhost:3000/websocket'); //TODO
+      var ddp = new MeteorDdp('ws://localhost:5000/websocket'); //TODO
       this.ddp = ddp;
 
       var that = this;
@@ -135,7 +135,7 @@ angular.module('app.service')
   })
   .factory('MeteorDataModel', function (MeteorDdp, WidgetDataModel) {
     function MeteorTimeSeriesDataModel() {
-      var ddp = new MeteorDdp('ws://localhost:3000/websocket'); //TODO
+      var ddp = new MeteorDdp('ws://localhost:5000/websocket'); //TODO
       this.ddp = ddp;
 
       var that = this;
