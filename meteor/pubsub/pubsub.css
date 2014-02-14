@@ -11,8 +11,18 @@ body {
 }
 
 #outer {
-    width: 600px;
-    margin: 0 auto;
+    width1: 600px;
+    margin1: 0 auto;
+}
+
+.demo {
+    margin-left: 20px;
+    margin-right: 20px;
+    float: left;
+}
+
+.leaderboard {
+    float1: left;
 }
 
 .player {

@@ -4,16 +4,31 @@
 
 <body>
 <div id="outer">
+    <div class="demo">
     {{> leaderboard}}
+    </div>
+    <div class="demo">
+        {{> dev}}
+    </div>
 </div>
 </body>
 
-<template name="leaderboard">
+<template name="dev">
     <div>
-        Timestamp <input type="button" class="generate" value="Generate" />
+        <input type="button" class="generate" value="Generate Timestamp" />
+        <br/>
+        <input type="button" class="callmethod" value="Call Method" /> Last Timestamp: <span>{{last}}</span>
     </div>
     <br/>
 
+    <div class="leaderboard">
+        {{#each apples}}
+        {{> apple}}
+        {{/each}}
+    </div>
+</template>
+
+<template name="leaderboard">
     <div class="leaderboard">
         {{#each players}}
         {{> player}}
@@ -34,5 +49,12 @@
     <div class="player {{selected}}">
         <span class="name">{{name}}</span>
         <span class="score">{{score}}</span>
+    </div>
+</template>
+
+<template name="apple">
+    <div class="player">
+        <span class="name">{{timestamp}}</span>
+        <span class="score">{{value}}</span>
     </div>
 </template>
