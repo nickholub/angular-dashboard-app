@@ -25,8 +25,12 @@ if (Meteor.isClient) {
 
   Template.dev.events({
     'click input.generate': function () {
-      var value = Math.floor(Math.random() * 100);
-      Timeseries.insert({ timestamp: Date.now(), value: value });
+      //var value = Math.floor(Math.random() * 100);
+      //Timeseries.insert({ timestamp: Date.now(), value: value });
+      Meteor.call('addTimestamp', function (error, result) {
+        console.log(result);
+        Session.set('last_timestamp', JSON.stringify(result));
+      });
     },
     'click input.addapples': function () {
       var value = Math.floor(Math.random() * 100);
@@ -72,6 +76,13 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.methods({
     getApples: function () {
+      return Timeseries.findOne({}, {
+        sort: { $natural: -1 }
+      });
+    },
+    addTimestamp: function () {
+      var value = Math.floor(Math.random() * 100);
+      Timeseries.insert({ timestamp: Date.now(), value: value });
       return Timeseries.findOne({}, {
         sort: { $natural: -1 }
       });
