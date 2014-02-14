@@ -62,7 +62,7 @@ angular.module('app.service')
         value: parseInt(value.value, 10) //TODO
       });
 
-      if (this.items > 100) { //TODO
+      if (this.items.length > 100) { //TODO
         this.items.shift();
       }
 
@@ -101,26 +101,28 @@ angular.module('app.service')
       this.items = [];
       collection = collection ? collection : this.dataModelOptions.collection;
 
-      this.ddp.subscribe(collection); //TODO get whole collection instead of 'added' events
+      this.ddp.subscribe(collection); //TODO
 
       var that = this;
 
-      this.ddp.watch(collection, function(value) {
-        that.updateScope(value);
-        that.widgetScope.$apply();
+      this.ddp.watch(collection, function(doc, msg) {
+        if (msg === 'added') {
+          that.updateScope(doc);
+          that.widgetScope.$apply();
+        }
       });
     };
 
     MeteorTimeSeriesDataModel.prototype.updateScope = function (value) {
-      value = _.isArray(value) ? value[0] : value;
+      if (value.hasOwnProperty('history')) {
+        //console.log(_.pluck(value.history, 'timestamp'));
+        this.items.push.apply(this.items, value.history);
+      } else {
+        this.items.push(value);
+      }
 
-      this.items.push({
-        timestamp: parseInt(value.timestamp, 10), //TODO
-        value: parseInt(value.value, 10) //TODO
-      });
-
-      if (this.items > 100) { //TODO
-        this.items.shift();
+      if (this.items.length > 100) { //TODO
+        this.items.splice(0, this.items.length - 100);
       }
 
       var chart = {
@@ -163,7 +165,7 @@ angular.module('app.service')
       var that = this;
 
       this.ddp.watch(collection, function(value) {
-        console.log(value);
+        //console.log(value);
         that.updateScope(value);
         that.widgetScope.$apply();
       });

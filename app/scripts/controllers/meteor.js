@@ -1,23 +1,39 @@
 'use strict';
 
 angular.module('app')
-  .controller('MeteorCtrl', function ($scope, MeteorDataModel, MeteorTimeSeriesDataModel, widgetDefs) {
-    var defaultWidgets = [
+  .controller('MeteorCtrl', function ($scope, MeteorDataModel, MeteorTimeSeriesDataModel) {
+    var widgetDefs = [
       {
         name: 'Line Chart',
-        title: 'Meteor MongoDB Historical Data',
+        directive: 'wt-line-chart',
+        dataAttrName: 'chart',
         dataModelType: MeteorTimeSeriesDataModel,
         dataModelOptions: {
-          collection: 'timeseries'
+          collection: 'history'
+        },
+        style: {
+          width: '50%'
         }
       },
       {
         name: 'JSON',
-        title: 'Players Collection Changes',
+        directive: 'wt-json',
+        dataAttrName: 'value',
         dataModelType: MeteorDataModel,
         dataModelOptions: {
-          collection: 'players'
+          collection: 'history'
         }
+      }
+    ];
+
+    var defaultWidgets = [
+      {
+        name: 'Line Chart',
+        title: 'Meteor MongoDB Historical Data'
+      },
+      {
+        name: 'JSON',
+        title: 'Collection Changes'
       }
     ];
 
