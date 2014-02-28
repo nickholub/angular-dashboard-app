@@ -70,3 +70,5 @@ Dashboard/Widgets functionality with AngularJS.
 [Grunt](http://gruntjs.com/) JavaScript Task Runner
 
 [Yeoman](http://yeoman.io/) Webapp generator
+
+[DDP](https://github.com/meteor/meteor/blob/master/packages/livedata/DDP.md) Meteor Distributed Data Protocol
