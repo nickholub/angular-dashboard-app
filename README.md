@@ -72,3 +72,5 @@ Dashboard/Widgets functionality with AngularJS.
 [Yeoman](http://yeoman.io/) Webapp generator
 
 [DDP](https://github.com/meteor/meteor/blob/master/packages/livedata/DDP.md) Meteor Distributed Data Protocol
+
+[Meteor-DDP](https://github.com/eddflrs/meteor-ddp) Meteor DDP Javascript client
