@@ -1,0 +1,31 @@
+<div style="overflow: hidden;" ng-controller="TopicCtrl">
+    <p>
+    <label class="form-label">Topic</label>
+    <div class="form-inline">
+        <select ng-model="topic" ng-options="topic.name for topic in topics"
+                class="form-control" style="min-width: 200px;">
+        </select>
+
+        <button class="btn btn-default navbar-btn" ng-click="prevTopic();">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+        <button class="btn btn-default navbar-btn" ng-click="nextTopic();">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
+    </div>
+    </p>
+    <p>
+        <label>Schema</label>
+
+    <div style="height: 100px;">
+        <pre style="overflow: auto;height: 100%;">{{topicSchema}}</pre>
+    </div>
+    </p>
+    <p>
+        <label>Real-Time Data</label>
+
+    <div style="height: 300px;">
+        <pre style="overflow: auto;height: 100%;">{{topicData}}</pre>
+    </div>
+</div>
+</p>
