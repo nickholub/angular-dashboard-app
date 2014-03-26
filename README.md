@@ -39,7 +39,8 @@ Run Node.js server
     $ node app.js
  ```
 
-Application will be available at http://localhost:3000
+Application will be available at http://localhost:3000.
+Node.js will serve static files from "dist" directory (bundled JS/CSS).
 
 ## Running Application (development mode)
  Install dependencies:
