@@ -30,20 +30,29 @@ AngularJS Dashboard directive is available as independent library
 
 ## Running Application (minimum dependencies)
 
-Install express
+1. Node.js way
+
+ Install express
 
  ``` bash
     $ npm install express
  ```
-
-Run Node.js server
+ Run Node.js server
 
  ``` bash
     $ node app.js
  ```
+ Application will be available at http://localhost:3000.
 
-Application will be available at http://localhost:3000.
-Node.js will serve static files from "dist" directory (bundled JS/CSS).
+2. Simple web server way
+
+ Start any web server in "dist" directory, e.g. with Python
+ ``` bash
+    $ python -m SimpleHTTPServer 8080
+ ```
+ Application will be available at http://localhost:8080
+
+In both cases static files (including bundled JS/CSS) will be served from "dist" directory.
 
 ## Running Application (development mode)
  Install dependencies:
