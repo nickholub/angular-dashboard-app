@@ -22,7 +22,7 @@ angular.module('app', [
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'ServerDataCtrl'
+        controller: 'MainCtrl'
       })
       .when('/meteor', {
         templateUrl: 'views/main.html',

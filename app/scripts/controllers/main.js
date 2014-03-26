@@ -25,22 +25,12 @@ angular.module('app')
         }
       },
       {
-        name: 'wt-pie-chart',
-        style: {
-          width: '350px',
-          height: '350px'
-        },
+        name: 'wt-line-chart',
         attrs: {
-          data: 'pieChartData'
-        }
-      },
-      {
-        name: 'wt-top-n',
-        attrs: {
-          data: 'topTen'
+          chart: 'chart'
         },
         style: {
-          width: '40%'
+          width: '50%'
         }
       },
       {
@@ -50,6 +40,15 @@ angular.module('app')
         },
         style: {
           width: '250px'
+        }
+      },
+      {
+        name: 'wt-top-n',
+        attrs: {
+          data: 'topTen'
+        },
+        style: {
+          width: '30%'
         }
       },
       {
@@ -71,15 +70,6 @@ angular.module('app')
         }
       },
       {
-        name: 'wt-line-chart',
-        attrs: {
-          chart: 'chart'
-        },
-        style: {
-          width: '50%'
-        }
-      },
-      {
         name: 'nvd3-stacked-area-chart',
         attrs: {
           data: 'stackedAreaChartData',
@@ -95,6 +85,16 @@ angular.module('app')
       {
         name: 'URLtemplate',
         templateUrl: 'template/percentage.html'
+      },
+      {
+        name: 'wt-pie-chart',
+        style: {
+          width: '350px',
+          height: '350px'
+        },
+        attrs: {
+          data: 'pieChartData'
+        }
       }
     ];
 
@@ -181,6 +181,7 @@ angular.module('app')
     // pie chart
     $scope.pieChartData = pieChartSampleData;
 
+    /*
     var pieChart = angular.copy(pieChartSampleData);
 
     $interval(function () { //TODO
@@ -191,6 +192,7 @@ angular.module('app')
       b.y = sum - a.y;
       $scope.pieChartData = angular.copy(pieChart);
     }, 500);
+    */
 
     // external controls
     $scope.addWidget = function (directive) {

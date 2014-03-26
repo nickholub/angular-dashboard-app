@@ -1,6 +1,7 @@
 var config = {};
 
-config.port = process.env.PORT || 3005;
+config.port = process.env.PORT || 3000;
+config.staticDir = process.env.STATIC_DIR || '/dist';
 
 // client settings (passed to the browser)
 config.settings = {};

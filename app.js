@@ -14,10 +14,9 @@ app.use(app.router);
 
 console.log('environment: ' + app.get('env'));
 
-if ('production' == app.get('env')) {
-    app.use(express.static(__dirname + '/dist'));
-} else if ('development' == app.get('env')) {
-    app.use(express.static(__dirname + '/app'));
+app.use(express.static(__dirname + config.staticDir));
+
+if ('development' === app.get('env')) {
     app.use(express.errorHandler());
 }
 
