@@ -1,9 +1,8 @@
 // client-side settings (for dev only)
 window.settings = {};
 
-//settings.gatewayHost = 'localhost:9090';
-settings.gatewayHost = 'node0.morado.com:9090';
-settings.meteorHost = 'localhost:3000';
+settings.gatewayHost = 'localhost:9090';
+settings.meteorHost = 'localhost:5000';
 
 settings.webSocketURL = 'ws://' + settings.gatewayHost + '/pubsub';
 settings.restBaseURL = 'http://' + settings.gatewayHost + '/ws/v1/';
