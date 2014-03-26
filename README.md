@@ -25,7 +25,23 @@ Dashboard/Widgets functionality with AngularJS.
 
 ![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
-## Running Application
+## Running Application (minimum dependencies)
+
+Install express
+
+ ``` bash
+    $ npm install express
+ ```
+
+Run Node.js server
+
+ ``` bash
+    $ node app.js
+ ```
+
+Application will be available at http://localhost:3000
+
+## Running Application (development mode)
  Install dependencies:
 
  ``` bash
