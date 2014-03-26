@@ -21,7 +21,9 @@ Dashboard/Widgets functionality with AngularJS.
 
  - Changing widget data source dynamically (from widget options)
 
-[Running demo with real-time data](http://nickholub.github.io/angular-dashboard-app)
+[Online demo with real-time data](http://nickholub.github.io/angular-dashboard-app)
+
+[AngularJS Dashboard directive](https://github.com/nickholub/angular-ui-dashboard) project.
 
 ![AngularJS Dashboard](docs/AngularJSDashboard.png "AngularJS Dashboard")
 
@@ -73,6 +75,8 @@ Node.js will serve static files from "dist" directory (bundled JS/CSS).
  ```
 
 ## Links
+
+[angular-ui-dashboard](https://github.com/nickholub/angular-ui-dashboard) AngularJS Dashboard directive.
 
 [Node.js](http://nodejs.org/) Software platform built on JavaScript runtime
 
