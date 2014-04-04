@@ -31,8 +31,8 @@
   },
   "resolutions": {
     "angular": "1.2.15",
-    "d3": "~3.3.13",
     "nvd3": "~1.1.15-beta",
-    "angular-ui-sortable": "~0.12.2"
+    "angular-ui-sortable": "~0.12.2",
+    "d3": "3.4.4"
   }
 }
