@@ -18,7 +18,7 @@
     "jquery-ui": "~1.10.3",
     "underscore": "~1.5.2",
     "ng-grid": "~2.0.7",
-    "d3": "~3.3.13",
+    "d3": "3.4.4",
     "nvd3": "~1.1.15-beta",
     "angularjs-nvd3-directives": "~0.0.5-beta",
     "angular-pines-notify": "~0.0.3",
