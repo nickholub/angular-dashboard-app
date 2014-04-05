@@ -52,6 +52,10 @@ angular.module('ui.dashboard.widgets')
             });
           }
 
+          if (chart.chartOptions) {
+            angular.extend(chartOptions, chart.chartOptions);
+          }
+
           lineChart.draw(view, chartOptions);
         }
 
