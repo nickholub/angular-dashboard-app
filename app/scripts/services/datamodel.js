@@ -86,7 +86,11 @@ angular.module('app.service')
     RestTimeSeriesDataModel.prototype.init = function () {
       WidgetDataModel.prototype.init.call(this);
 
-      $http.get('/data').success(function (data) {
+      var params = this.dataModelOptions ? this.dataModelOptions.params : {};
+
+      $http.get('/data', {
+        params: params
+      }).success(function (data) {
         var chart = {
           data: data,
           chartOptions: { vAxis: {} }

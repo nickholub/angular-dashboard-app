@@ -3,10 +3,15 @@ var MongoClient = require('mongodb').MongoClient;
 
 var etlDb;
 
-function query(callback) {
+function query(callback, bucket) {
   var collection = etlDb.collection('apacheAggregates');
+
+  var dimBucket = bucket ? bucket : 'MINUTES';
+
   collection.find({
-    'dimensions.bucket': 'MINUTES',
+    //'dimensions.bucket': 'MINUTES',
+    //'dimensions.bucket': 'HOURS',
+    'dimensions.bucket': dimBucket,
     'dimensions.timestamp': {$exists: true}
   })
     .sort({'dimensions.timestamp': -1 })
@@ -58,7 +63,7 @@ function data(req, res) {
     });
 
     res.json(response);
-  });
+  }, req.query.bucket);
 }
 
 exports.data = data;
