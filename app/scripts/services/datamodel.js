@@ -77,6 +77,31 @@ angular.module('app.service')
 
     return TimeSeriesDataModel;
   })
+  .factory('RestTimeSeriesDataModel', function (settings, WidgetDataModel, $http) {
+    function RestTimeSeriesDataModel() {
+    }
+
+    RestTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    RestTimeSeriesDataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
+
+      var params = this.dataModelOptions ? this.dataModelOptions.params : {};
+
+      $http.get('/data', {
+        params: params
+      }).success(function (data) {
+        var chart = {
+          data: data,
+          chartOptions: { vAxis: {} }
+        };
+
+        WidgetDataModel.prototype.updateScope.call(this, chart);
+      }.bind(this));
+    };
+
+    return RestTimeSeriesDataModel;
+  })
   .factory('MeteorTimeSeriesDataModel', function (settings, MeteorDdp, WidgetDataModel) {
     function MeteorTimeSeriesDataModel() {
       var ddp = new MeteorDdp(settings.meteorURL); //TODO
