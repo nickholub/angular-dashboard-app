@@ -17,7 +17,7 @@ console.log('environment: ' + app.get('env'));
 app.use(express.static(__dirname + config.staticDir));
 
 if ('development' === app.get('env')) {
-    app.use(express.errorHandler());
+  app.use(express.errorHandler());
 }
 
 app.get('/settings.js', function(req, res) {
