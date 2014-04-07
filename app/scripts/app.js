@@ -22,7 +22,7 @@ angular.module('app', [
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'RestDataCtrl'
+        controller: 'MainCtrl'
       })
       .when('/rest', {
         templateUrl: 'views/main.html',
