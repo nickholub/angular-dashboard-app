@@ -163,7 +163,7 @@ module.exports = function (grunt) {
       }
     },
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/index.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
@@ -369,9 +369,11 @@ module.exports = function (grunt) {
       'less:development',
       'autoprefixer',
       'connect:livereload',
-      'watch',
+      'watch'
     ]);
   });
+
+  grunt.registerTask('run', ['connect:dist:keepalive']);
 
   grunt.registerTask('test', [
     'clean:server',
