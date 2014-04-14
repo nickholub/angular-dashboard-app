@@ -23,7 +23,7 @@
     "angularjs-nvd3-directives": "~0.0.5-beta",
     "angular-pines-notify": "~0.0.3",
     "pnotify": "git@github.com:sciactive/pnotify.git#master",
-    "angular-ui-sortable": "~0.12.2"
+    "angular-ui-sortable": ">=0.12.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
