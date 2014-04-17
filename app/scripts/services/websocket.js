@@ -89,6 +89,7 @@ angular.module('app.websocket', ['ui.notify'])
         });
 
         visibly.onVisible(function () {
+          /*
           if (stopUpdates && !webSocketError) {
             notificationService.notify({
               title: 'Warning',
@@ -100,6 +101,7 @@ angular.module('app.websocket', ['ui.notify'])
               history: false
             });
           }
+          */
 
           stopUpdates = false;
 
