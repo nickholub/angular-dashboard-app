@@ -4,7 +4,7 @@ var MongoClient = require('mongodb').MongoClient;
 var etlDb;
 
 function query(callback, bucket) {
-  var collection = etlDb.collection('apacheAggregates');
+  var collection = etlDb.collection('aggregations');
 
   var dimBucket = bucket ? bucket : 'MINUTES';
 
@@ -15,7 +15,7 @@ function query(callback, bucket) {
     'dimensions.logType': 'apache'
   })
     .sort({'dimensions.timestamp': -1 })
-    .limit(2000)
+    //.limit(2000)
     .toArray(callback);
 }
 
@@ -26,7 +26,7 @@ MongoClient.connect('mongodb://localhost:27017/etl_sample2', function (err, db) 
   }
 
 
-  var collection = db.collection('apacheAggregates');
+  var collection = db.collection('aggregations');
 
   collection.stats(function (err, stats) {
     console.log(stats);
@@ -38,12 +38,18 @@ MongoClient.connect('mongodb://localhost:27017/etl_sample2', function (err, db) 
 });
 
 function data(req, res) {
+  var metric = req.query.metric;
   query(function (err, items) {
     var response = _.map(items, function (item) {
       return {
         timestamp: item.dimensions.timestamp.getTime(),
-        value: item.metrics.count
+        value: item.metrics[metric]
       };
+    });
+
+    //TODO filter in query with $exists instead
+    response = _.reject(response, function (item) {
+      return _.isUndefined(item.value);
     });
 
     res.json(response);
@@ -51,7 +57,7 @@ function data(req, res) {
 }
 
 function countries(req, res) {
-  var collection = etlDb.collection('apacheAggregates');
+  var collection = etlDb.collection('aggregations');
 
   var limit = req.query.limit ? parseInt(req.query.limit, 10) : 100;
 
@@ -76,9 +82,9 @@ function countries(req, res) {
 }
 
 function all(req, res) {
-  var collection = etlDb.collection('apacheAggregates');
+  var collection = etlDb.collection('aggregations');
   collection.find({})
-    .limit(2000)
+    //.limit(2000)
     .toArray(function (err, data) {
       res.json(data);
     });

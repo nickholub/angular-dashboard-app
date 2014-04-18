@@ -96,7 +96,10 @@ angular.module('app.service')
     };
 
     RestTimeSeriesDataModel.prototype.load = function () {
-      var params = this.mode ? { bucket: this.mode } : {};
+      var params = {
+        bucket: this.mode,
+        metric: this.dataModelOptions.metric
+      };
 
       $http.get('/data', {
         params: params
