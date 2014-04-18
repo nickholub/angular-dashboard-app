@@ -1,7 +1,7 @@
 var express = require('express');
 var http = require('http');
 var config = require('./config');
-//var mongo = require('./routes/mongo');
+var mongo = require('./routes/mongo');
 
 var app = express();
 
@@ -29,7 +29,9 @@ app.get('/settings.js', function(req, res) {
   res.send('window.settings = ' + JSON.stringify(config.settings) + ';');
 });
 
-//app.get('/data', mongo.data);
+app.get('/data', mongo.data);
+app.get('/all', mongo.all);
+app.get('/countries', mongo.countries);
 
 http.createServer(app).listen(config.port, function(){
     console.log('Express server listening on port ' + config.port);

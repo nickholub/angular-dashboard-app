@@ -85,22 +85,58 @@ angular.module('app.service')
 
     RestTimeSeriesDataModel.prototype.init = function () {
       WidgetDataModel.prototype.init.call(this);
+      this.mode = this.dataModelOptions ? this.dataModelOptions.mode : 'MINUTES';
 
-      var params = this.dataModelOptions ? this.dataModelOptions.params : {};
+      this.widgetScope.$on('modeChanged', function (event, mode) {
+        this.mode = mode;
+        this.load();
+      }.bind(this));
+
+      this.load();
+    };
+
+    RestTimeSeriesDataModel.prototype.load = function () {
+      var params = this.mode ? { bucket: this.mode } : {};
 
       $http.get('/data', {
         params: params
       }).success(function (data) {
           var chart = {
             data: data,
-            chartOptions: { vAxis: {} }
+            chartOptions: {
+              vAxis: {}
+            }
           };
 
-          WidgetDataModel.prototype.updateScope.call(this, chart);
+          this.updateScope(chart);
         }.bind(this));
     };
 
     return RestTimeSeriesDataModel;
+  })
+  .factory('RestTopNDataModel', function (settings, WidgetDataModel, $http) {
+    function RestTopNDataModel() {
+    }
+
+    RestTopNDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    RestTopNDataModel.prototype.init = function () {
+      WidgetDataModel.prototype.init.call(this);
+
+      this.load();
+    };
+
+    RestTopNDataModel.prototype.load = function () {
+      $http.get('/countries', {
+        params: {
+          limit: 20
+        }
+      }).success(function (data) {
+        this.updateScope(data);
+      }.bind(this));
+    };
+
+    return RestTopNDataModel;
   })
   .factory('MeteorTimeSeriesDataModel', function (settings, MeteorDdp, WidgetDataModel) {
     function MeteorTimeSeriesDataModel() {
@@ -333,6 +369,64 @@ angular.module('app.service')
           data: data,
           max: max
         };
+
+        this.updateScope(chart);
+      }.bind(this), 1000);
+    };
+
+    RandomTimeSeriesDataModel.prototype.destroy = function () {
+      WidgetDataModel.prototype.destroy.call(this);
+      $interval.cancel(this.intervalPromise);
+    };
+
+    return RandomTimeSeriesDataModel;
+  })
+  .factory('RandomD3TimeSeriesDataModel', function (WidgetDataModel, $interval) {
+    function RandomTimeSeriesDataModel() {
+    }
+
+    RandomTimeSeriesDataModel.prototype = Object.create(WidgetDataModel.prototype);
+
+    RandomTimeSeriesDataModel.prototype.init = function () {
+      var max = 30;
+      var data = [];
+      var chartValue = 50;
+
+      function nextValue() {
+        chartValue += Math.round(Math.random() * 40 - 20);
+        chartValue = chartValue < 0 ? 0 : chartValue > 100 ? 100 : chartValue;
+        return chartValue;
+      }
+
+      var now = Date.now();
+      for (var i = max - 1; i >= 0; i--) {
+        data.push({
+          timestamp: now - i * 1000,
+          value: nextValue()
+        });
+      }
+      var chart = [
+        {
+          'key': 'Series',
+          values: data
+        }
+      ];
+
+      this.updateScope(chart);
+
+      this.intervalPromise = $interval(function () {
+        data.shift();
+        data.push({
+          timestamp: Date.now(),
+          value: nextValue()
+        });
+
+        var chart = [
+          {
+            'key': 'Series',
+            values: data
+          }
+        ];
 
         this.updateScope(chart);
       }.bind(this), 1000);

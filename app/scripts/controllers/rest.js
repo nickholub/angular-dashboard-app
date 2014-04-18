@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-  .controller('RestDataCtrl', function ($scope, webSocket, Gateway, settings, RestTimeSeriesDataModel) {
+  .controller('RestDataCtrl', function ($scope, settings, RestTimeSeriesDataModel, RestTopNDataModel) {
     var widgetDefs = [
       {
         name: 'Line Chart Minutes',
@@ -30,25 +30,43 @@ angular.module('app')
         style: {
           width: '50%'
         }
+      },
+      {
+        name: 'Line Chart',
+        directive: 'wt-historical-chart',
+        dataAttrName: 'chart',
+        dataModelType: RestTimeSeriesDataModel,
+        dataModelOptions: {
+        },
+        style: {
+          width: '100%'
+        }
+      },
+      {
+        name: 'Countries',
+        directive: 'wt-top-n',
+        dataAttrName: 'data',
+        dataModelType: RestTopNDataModel,
+        style: {
+          width: '30%'
+        }
       }
     ];
 
     var defaultWidgets = [
       {
-        name: 'Line Chart Minutes',
-        title: 'MongoDB Historical Data - Minutes'
+        name: 'Line Chart',
+        title: 'Visits'
       },
       {
-        name: 'Line Chart Hours',
-        title: 'MongoDB Historical Data - Hours'
+        name: 'Countries',
+        title: 'Countries'
       }
     ];
 
     $scope.dashboardOptions = {
-      //useLocalStorage: true, //TODO enable by default
       widgetButtons: true,
       widgetDefinitions: widgetDefs,
-      defaultWidgets: defaultWidgets,
-      //optionsTemplateUrl: 'template/widgetOptions.html'
+      defaultWidgets: defaultWidgets
     };
   });

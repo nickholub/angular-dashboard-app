@@ -9,17 +9,17 @@ function query(callback, bucket) {
   var dimBucket = bucket ? bucket : 'MINUTES';
 
   collection.find({
-    //'dimensions.bucket': 'MINUTES',
-    //'dimensions.bucket': 'HOURS',
+    dimension_size: 3,
     'dimensions.bucket': dimBucket,
-    'dimensions.timestamp': {$exists: true}
+    'dimensions.timestamp': {$exists: true},
+    'dimensions.logType': 'apache'
   })
     .sort({'dimensions.timestamp': -1 })
     .limit(2000)
     .toArray(callback);
 }
 
-MongoClient.connect('mongodb://localhost:27017/etl_sample1', function (err, db) {
+MongoClient.connect('mongodb://localhost:27017/etl_sample2', function (err, db) {
   etlDb = db;
   if (err) {
     return console.dir(err);
@@ -35,22 +35,6 @@ MongoClient.connect('mongodb://localhost:27017/etl_sample1', function (err, db) 
   query(function (err, items) {
     console.log(items.length);
   });
-
-  /*
-   collection.find(
-   {
-   'dimensions.agentinfo_device': 'Other',
-   'dimensions.logType': 'apache',
-   'dimensions.bucket': 'MINUTES',
-   'dimensions.timestamp': {$exists: true}
-   //"geoip_city_name": "San Francisco" }
-   })
-   .sort({'dimensions.timestamp': -1 })
-   .limit(10)
-   .toArray(function (err, items) {
-   console.log(items);
-   });
-   */
 });
 
 function data(req, res) {
@@ -58,7 +42,7 @@ function data(req, res) {
     var response = _.map(items, function (item) {
       return {
         timestamp: item.dimensions.timestamp.getTime(),
-        value: item.metrics.bytesCount
+        value: item.metrics.count
       };
     });
 
@@ -66,4 +50,40 @@ function data(req, res) {
   }, req.query.bucket);
 }
 
+function countries(req, res) {
+  var collection = etlDb.collection('apacheAggregates');
+
+  var limit = req.query.limit ? parseInt(req.query.limit, 10) : 100;
+
+  collection.find({
+    dimension_size: 2,
+    'dimensions.geoip_country_name': {$exists: true},
+    'dimensions.logType': 'apache'
+  })
+    .sort({'metrics.count': -1 })
+    .limit(limit)
+    .toArray(function (err, items) {
+      var response = _.map(items, function (item) {
+        return {
+          name: item.dimensions.geoip_country_name,
+          value: item.metrics.count
+        };
+      });
+
+      res.json(response);
+      //res.json(items);
+    });
+}
+
+function all(req, res) {
+  var collection = etlDb.collection('apacheAggregates');
+  collection.find({})
+    .limit(2000)
+    .toArray(function (err, data) {
+      res.json(data);
+    });
+}
+
 exports.data = data;
+exports.countries = countries;
+exports.all = all;
