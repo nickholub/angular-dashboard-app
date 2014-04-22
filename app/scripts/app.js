@@ -21,8 +21,7 @@ angular.module('app', [
 
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        redirectTo: '/rest'
       })
       .when('/rest', {
         templateUrl: 'views/main.html',
