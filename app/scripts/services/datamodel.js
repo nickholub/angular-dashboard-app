@@ -130,9 +130,10 @@ angular.module('app.service')
     };
 
     RestTopNDataModel.prototype.load = function () {
-      $http.get('/countries', {
+      $http.get('/topn', {
         params: {
-          limit: 20
+          limit: this.dataModelOptions.limit,
+          dimension: this.dataModelOptions.dimension
         }
       }).success(function (data) {
         this.updateScope(data);

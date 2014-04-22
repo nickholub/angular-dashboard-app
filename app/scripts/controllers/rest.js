@@ -39,7 +39,7 @@ angular.module('app')
         dataModelOptions: {
         },
         style: {
-          width: '100%'
+          width: '50%'
         }
       },
       {
@@ -47,8 +47,38 @@ angular.module('app')
         directive: 'wt-top-n',
         dataAttrName: 'data',
         dataModelType: RestTopNDataModel,
+        dataModelOptions: {
+          dimension: 'geoip_country_name',
+          limit: 20
+        },
         style: {
-          width: '30%'
+          width: '33%'
+        }
+      },
+      {
+        name: 'Cities',
+        directive: 'wt-top-n',
+        dataAttrName: 'data',
+        dataModelType: RestTopNDataModel,
+        dataModelOptions: {
+          dimension: 'geoip_city_name',
+          limit: 20
+        },
+        style: {
+          width: '33%'
+        }
+      },
+      {
+        name: 'Browsers',
+        directive: 'wt-top-n',
+        dataAttrName: 'data',
+        dataModelType: RestTopNDataModel,
+        dataModelOptions: {
+          dimension: 'agentinfo_name',
+          limit: 20
+        },
+        style: {
+          width: '33%'
         }
       }
     ];
@@ -56,11 +86,29 @@ angular.module('app')
     var defaultWidgets = [
       {
         name: 'Line Chart',
-        title: 'Visits'
+        title: 'Visits',
+        dataModelOptions: {
+          metric: 'count'
+        }
+      },
+      {
+        name: 'Line Chart',
+        title: 'Bandwidth',
+        dataModelOptions: {
+          metric: 'bandwidth'
+        }
       },
       {
         name: 'Countries',
         title: 'Countries'
+      },
+      {
+        name: 'Cities',
+        title: 'Cities'
+      },
+      {
+        name: 'Browsers',
+        title: 'Browsers'
       }
     ];
 
