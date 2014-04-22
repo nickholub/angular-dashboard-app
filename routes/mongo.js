@@ -56,22 +56,27 @@ function data(req, res) {
   }, req.query.bucket);
 }
 
-function countries(req, res) {
+function topn(req, res) {
   var collection = etlDb.collection('aggregations');
 
   var limit = req.query.limit ? parseInt(req.query.limit, 10) : 100;
 
-  collection.find({
-    dimension_size: 2,
-    'dimensions.geoip_country_name': {$exists: true},
-    'dimensions.logType': 'apache'
-  })
+  var dimension = req.query.dimension;
+  var dimensionQuery = {};
+  dimensionQuery['dimension_size'] = 2;
+  dimensionQuery['dimensions.' + dimension] = {$exists: true};
+  dimensionQuery['dimensions.logType'] = 'apache';
+
+  collection.find(dimensionQuery)
     .sort({'metrics.count': -1 })
     .limit(limit)
     .toArray(function (err, items) {
       var response = _.map(items, function (item) {
+        var dimensionName = item.dimensions[dimension];
+        dimensionName = dimensionName ? dimensionName : 'Other';
+
         return {
-          name: item.dimensions.geoip_country_name,
+          name: dimensionName,
           value: item.metrics.count
         };
       });
@@ -91,5 +96,5 @@ function all(req, res) {
 }
 
 exports.data = data;
-exports.countries = countries;
+exports.topn = topn;
 exports.all = all;

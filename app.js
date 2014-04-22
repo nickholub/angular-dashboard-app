@@ -31,7 +31,7 @@ app.get('/settings.js', function(req, res) {
 
 //app.get('/data', mongo.data);
 //app.get('/all', mongo.all);
-//app.get('/countries', mongo.countries);
+//app.get('/topn', mongo.topn);
 
 http.createServer(app).listen(config.port, function(){
     console.log('Express server listening on port ' + config.port);
