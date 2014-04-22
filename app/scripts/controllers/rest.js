@@ -4,39 +4,24 @@ angular.module('app')
   .controller('RestDataCtrl', function ($scope, settings, RestTimeSeriesDataModel, RestTopNDataModel) {
     var widgetDefs = [
       {
-        name: 'Line Chart Minutes',
-        directive: 'wt-line-chart',
-        dataAttrName: 'chart',
-        dataModelType: RestTimeSeriesDataModel,
-        dataModelOptions: {
-          params: {
-            bucket: 'MINUTES'
-          }
-        },
-        style: {
-          width: '50%'
-        }
-      },
-      {
-        name: 'Line Chart Hours',
-        directive: 'wt-line-chart',
-        dataAttrName: 'chart',
-        dataModelType: RestTimeSeriesDataModel,
-        dataModelOptions: {
-          params: {
-            bucket: 'HOURS'
-          }
-        },
-        style: {
-          width: '50%'
-        }
-      },
-      {
-        name: 'Line Chart',
+        name: 'Line Chart Visits',
         directive: 'wt-historical-chart',
         dataAttrName: 'chart',
         dataModelType: RestTimeSeriesDataModel,
         dataModelOptions: {
+          metric: 'count'
+        },
+        style: {
+          width: '50%'
+        }
+      },
+      {
+        name: 'Line Chart Bandwidth',
+        directive: 'wt-historical-chart',
+        dataAttrName: 'chart',
+        dataModelType: RestTimeSeriesDataModel,
+        dataModelOptions: {
+          metric: 'bandwidth'
         },
         style: {
           width: '50%'
@@ -85,18 +70,12 @@ angular.module('app')
 
     var defaultWidgets = [
       {
-        name: 'Line Chart',
-        title: 'Visits',
-        dataModelOptions: {
-          metric: 'count'
-        }
+        name: 'Line Chart Visits',
+        title: 'Visits'
       },
       {
-        name: 'Line Chart',
-        title: 'Bandwidth',
-        dataModelOptions: {
-          metric: 'bandwidth'
-        }
+        name: 'Line Chart Bandwidth',
+        title: 'Bandwidth'
       },
       {
         name: 'Countries',
