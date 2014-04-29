@@ -19,6 +19,7 @@
     "underscore": "~1.5.2",
     "d3": "3.4.4",
     "nvd3": "~1.1.15-beta",
+    "ng-grid": "~2.0.11",
     "angularjs-nvd3-directives": "~0.0.7",
     "angular-pines-notify": "~0.1",
     "pines-notify": "~1.3",
