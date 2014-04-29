@@ -19,7 +19,7 @@ Dashboard/Widgets functionality with AngularJS (Demo application for [https://gi
 
  - Any directive can be a widget (e.g. AngularUI directives)
 
- - Connecting widgets to real-time data (WebSocket)
+ - Connecting widgets to real-time data (WebSocket, REST, etc.)
 
  - Changing widget data source dynamically (from widget options)
 
