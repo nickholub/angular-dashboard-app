@@ -4,7 +4,7 @@ angular-dashboard
 **Further development on this project is split to separate repositories:**
  - **[Widget Library](https://github.com/DataTorrent/malhar-angular-widgets)**
  - **[Demo Application](https://github.com/DataTorrent/malhar-dashboard-webapp)**
-------------
+
 
 Dashboard/Widgets functionality with AngularJS (Demo application for [https://github.com/nickholub/angular-ui-dashboard](https://github.com/nickholub/angular-ui-dashboard)).
 
