@@ -1,7 +1,7 @@
 angular-dashboard
 =================
 
-**Further development on this project is split into separate repositories:**
+**Further development in this project is split into separate repositories:**
  - **[Dashboard Directive](https://github.com/DataTorrent/malhar-angular-dashboard)**
  - **[Widget Library](https://github.com/DataTorrent/malhar-angular-widgets)**
  - **[Demo Application](https://github.com/DataTorrent/malhar-dashboard-webapp)**
