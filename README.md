@@ -4,7 +4,7 @@ angular-dashboard
 [![Build Status](https://travis-ci.org/nickholub/angular-dashboard-app.svg?branch=master)](https://travis-ci.org/nickholub/angular-dashboard-app)
 
 **Further development in this project is split into separate repositories:**
- - **[Dashboard Directive](https://github.com/DataTorrent/malhar-angular-dashboard)**
+ - **[Dashboard Directive](https://github.com/DataTorrent/malhar-angular-dashboard)** (core component providing dashboard/widgets functionality)
  - **[Widget Library](https://github.com/DataTorrent/malhar-angular-widgets)**
  - **[Demo Application](https://github.com/DataTorrent/malhar-dashboard-webapp)**
 
